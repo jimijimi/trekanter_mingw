@@ -2,8 +2,9 @@ This is the C version of Trekanter, a very simple STL geometry viewer for the
 WIndows OS. This version improves and extend the previously released trekante.rb Ruby version.
 
 Trekanter C
+===========
 
-- is faster since it is written in C.
+- is faster since it is written in C ( really? ).
 - can handle 'n' number of geometries, the limitation is the local host memory.
 - can read STL binary and ascii files
 - can display additional information such as bounding box size, triangle count.
@@ -34,6 +35,8 @@ Treakenter C is not perfect and many changes will be carried out in the near/mid
 - As of today it is unknown if Trekant.c will compile under a real Windows environment.
   All the development was carried out under Debian 7/8 using the win32-mingw toolchain.
   The EXE file however runs perfectly fine in basically any Windows version.
+- The code can be further improved to gain additional speed. Real C programmers will
+  immediately see some awkward code.
 
 
 The development environment is:
@@ -44,19 +47,15 @@ The development environment is:
 - icoutils 0.31.0
 - GNU Emacs 24.4.1
 
-To compile
+Compilation
+-----------
 
- $ make <enter>
-
+     $ make <enter>
+	
 This will produce two exe files, one for Windows 32 bits and the other for Windows 64 bits.
 
- $ trekanter --help  <enter>
+     $ trekanter --help  <enter>
 
 To show the help.
-
-
-
-  
-
 
   
