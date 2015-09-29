@@ -27,9 +27,9 @@ Treakenter C is not perfect and many changes will be carried out in the near/mid
 - The current arquitecture is (very) messy and a new one is under development.
 - Has a lot global variables. Because of this the code looks spaghetti-esque.
   This will be handled in the next arquitecture.
-- It uses OpenGL 1.1 with immediate mode ( Yes, you hear well ). However Modern OpenGL
-  will be part of the new arquitecture. But old OpenGL will be maintained for legacy
-  systems.
+- It uses OpenGL 1.1/1.4 with immediate mode ( Yes, you hear well ) and it will
+  maintained for legacy systems. However Modern OpenGL will also be utilized in
+  the new version.
 - Windows only for the moment but it can run on Linux using Wine. Native Linux version
   will be considered in the future.
 - As of today it is unknown if Trekant.c will compile under a real Windows environment.
@@ -46,6 +46,7 @@ The development environment is:
 - i686-w64-mingw32-gcc 4.9.1 to produce 32 bit windows executables
 - icoutils 0.31.0
 - GNU Emacs 24.4.1
+- GNU make 
 
 Compilation
 -----------
