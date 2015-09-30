@@ -1,7 +1,7 @@
 This is the C version of Trekanter, a very simple STL geometry viewer for the
 WIndows OS. This version improves and extend the previously released trekante.rb Ruby version.
 
-Trekanter C
+TrekantER C
 ===========
 
 - is faster since it is written in C ( really? ).
@@ -36,7 +36,9 @@ Treakenter C is not perfect and many changes will be carried out in the near/mid
   All the development was carried out under Debian 7/8 using the win32-mingw toolchain.
   The EXE file however runs perfectly fine in basically any Windows version.
 - The code can be further improved to gain additional speed. Real C programmers will
-  immediately see some awkward code.
+  immediately see some awkward code. 
+- The code lacks comments but I believe most of it is self-explanatory.
+- The code contains some 'magic' numbers those will be addressed in a future version.  
 
 
 The development environment is:
