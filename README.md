@@ -4,6 +4,7 @@ WIndows OS. This version improves and extend the previously released trekante.rb
 TrekantER C
 ===========
 
+
 - is faster since it is written in C ( really? ).
 - can handle 'n' number of geometries, the limitation is the local host memory.
 - can read STL binary and ascii files
@@ -48,7 +49,22 @@ The development environment is:
 - i686-w64-mingw32-gcc 4.9.1 to produce 32 bit windows executables
 - icoutils 0.31.0
 - GNU Emacs 24.4.1
-- GNU make 
+- GNU make 3.81
+
+
+License
+=======
+
+
+TrekanER C has been released under the GPL v2. See the LICENSE.txt file for more information.
+
+
+Author
+======
+
+
+Jaime Ortiz.  quark dot charm at gmail.com
+
 
 Compilation
 -----------
@@ -62,3 +78,4 @@ This will produce two exe files, one for Windows 32 bits and the other for Windo
 To show the help.
 
   
+
