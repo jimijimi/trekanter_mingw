@@ -314,6 +314,7 @@ struct Matrix4x4 Qt_ToMatrix( Quat q )
 	m.matrix[4] = xy + wz;           m.matrix[5] = 1.0 - ( xx + zz ); m.matrix[6] = yz - wx;            m.matrix[7] = 0.0;
 	m.matrix[8] = xz - wy;           m.matrix[9] = yz + wx;           m.matrix[10] = 1.0 - ( xx + yy ); m.matrix[11] = 0.0;
 	m.matrix[12] = 0.0;              m.matrix[13] = 0.0;              m.matrix[14] = 0.0;               m.matrix[15] = 1.0;
+
 	return m;
 }
 
@@ -326,39 +327,24 @@ struct Matrix4x4 matrixMultiplication( HMatrix a, HMatrix b ){
 	   a12 a13 a14 a15       b12 b13 b14 b15*/
 
 	struct Matrix4x4 m;
-	// this redefinition of variables may be redundant.
-	float a0 = a[0]; float b0 = b[0];
-	float a1 = a[1]; float b1 = b[1];
-	float a2 = a[2]; float b2 = b[2];
-	float a3 = a[3]; float b3 = b[3];
-	float a4 = a[4]; float b4 = b[4];
-	float a5 = a[5]; float b5 = b[5];
-	float a6 = a[6]; float b6 = b[6];
-	float a7 = a[7]; float b7 = b[7];
-	float a8 = a[8]; float b8 = b[8];
-	float a9 = a[9]; float b9 = b[9];
-	float a10 = a[10]; float b10 = b[10];
-	float a11 = a[11]; float b11 = b[11];
-	float a12 = a[12]; float b12 = b[12];
-	float a13 = a[13]; float b13 = b[13];
-	float a14 = a[14]; float b14 = b[14];
-	float a15 = a[15]; float b15 = b[15];
-	m.matrix[0]  = a0  * b0 + a1  * b4 + a2  * b8  + a3  * b12;
-	m.matrix[1]  = a0  * b1 + a1  * b5 + a2  * b9  + a3  * b13;
-	m.matrix[2]  = a0  * b2 + a1  * b6 + a2  * b10 + a3  * b14;
-	m.matrix[3]  = a0  * b3 + a1  * b7 + a2  * b11 + a3  * b15;
-	m.matrix[4]  = a4  * b0 + a5  * b4 + a6  * b8  + a7  * b12;
-	m.matrix[5]  = a4  * b1 + a5  * b5 + a6  * b9  + a7  * b13;
-	m.matrix[6]  = a4  * b2 + a5  * b6 + a6  * b10 + a7  * b14;
-	m.matrix[7]  = a4  * b3 + a5  * b7 + a6  * b11 + a7  * b15;
-	m.matrix[8]  = a8  * b0 + a9  * b4 + a10 * b8  + a11 * b12;
-	m.matrix[9]  = a8  * b1 + a9  * b5 + a10 * b9  + a11 * b13;
- 	m.matrix[10] = a8  * b2 + a9  * b6 + a10 * b10 + a11 * b14;
-	m.matrix[11] = a8  * b3 + a9  * b7 + a10 * b11 + a11 * b15;
-	m.matrix[12] = a12 * b0 + a13 * b4 + a14 * b8  + a15 * b12;
-	m.matrix[13] = a12 * b1 + a13 * b5 + a14 * b9  + a15 * b13;
-	m.matrix[14] = a12 * b2 + a13 * b6 + a14 * b10 + a15 * b14;
-	m.matrix[15] = a12 * b3 + a13 * b7 + a14 * b11 + a15 * b15;
+	
+	m.matrix[0]  = a[0]  * b[0] + a[1]  * b[4] + a[2]  * b[8]  + a[3]  * b[12];
+	m.matrix[1]  = a[0]  * b[1] + a[1]  * b[5] + a[2]  * b[9]  + a[3]  * b[13];
+	m.matrix[2]  = a[0]  * b[2] + a[1]  * b[6] + a[2]  * b[10] + a[3]  * b[14];
+	m.matrix[3]  = a[0]  * b[3] + a[1]  * b[7] + a[2]  * b[11] + a[3]  * b[15];
+	m.matrix[4]  = a[4]  * b[0] + a[5]  * b[4] + a[6]  * b[8]  + a[7]  * b[12];
+	m.matrix[5]  = a[4]  * b[1] + a[5]  * b[5] + a[6]  * b[9]  + a[7]  * b[13];
+	m.matrix[6]  = a[4]  * b[2] + a[5]  * b[6] + a[6]  * b[10] + a[7]  * b[14];
+	m.matrix[7]  = a[4]  * b[3] + a[5]  * b[7] + a[6]  * b[11] + a[7]  * b[15];
+	m.matrix[8]  = a[8]  * b[0] + a[9]  * b[4] + a[10] * b[8]  + a[11] * b[12];
+	m.matrix[9]  = a[8]  * b[1] + a[9]  * b[5] + a[10] * b[9]  + a[11] * b[13];
+ 	m.matrix[10] = a[8]  * b[2] + a[9]  * b[6] + a[10] * b[10] + a[11] * b[14];
+	m.matrix[11] = a[8]  * b[3] + a[9]  * b[7] + a[10] * b[11] + a[11] * b[15];
+	m.matrix[12] = a[12] * b[0] + a[13] * b[4] + a[14] * b[8]  + a[15] * b[12];
+	m.matrix[13] = a[12] * b[1] + a[13] * b[5] + a[14] * b[9]  + a[15] * b[13];
+	m.matrix[14] = a[12] * b[2] + a[13] * b[6] + a[14] * b[10] + a[15] * b[14];
+	m.matrix[15] = a[12] * b[3] + a[13] * b[7] + a[14] * b[11] + a[15] * b[15];
+
 	return m; 	   
 }
 
