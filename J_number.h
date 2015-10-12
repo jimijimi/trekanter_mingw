@@ -7,7 +7,7 @@
   LICENSE.txt and the end of this file.
 
   compile as object with:
-  gcc -c J_string.c -o J_string.o
+  gcc -c J_number.c -o J_number.o
 
 */
 
