@@ -1,6 +1,6 @@
 /*
   J_number.h 2015(c) Jaime Ortiz
-  String additions or how not to reinvent the wheel.
+  String additions or how to reinvent the wheel.
   
   For copyright and license information see: 
   LICENSE.txt and the end of this file.
