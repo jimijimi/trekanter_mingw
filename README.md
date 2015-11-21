@@ -20,12 +20,11 @@ TrekantER C
 - can run in ReactOS.
 - can run in Wine.
 - has full zoom, pan and rotations ( using quaternions ) capability.
-- is compiled into a compact single EXE file of ~250 kb in size.
 - can be compiled under 32 bits and 64 bits.
 - requires no installation, the exe file can copied to any location and run with a
   simple double-click or from the command line by invoking the application name.
 - compiled version will be made available for download in bitbucket/github.
-- Very Small size ~350 kb.
+- Very Small size ~350 kb. Can I make it smaller?
 - It can load any STL file (ASCII or Binary) and of any size.
   The only limitation is the system memory.
 
