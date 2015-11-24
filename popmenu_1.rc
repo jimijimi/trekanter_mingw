@@ -1,0 +1,18 @@
+#include "popmenu_1.h"
+
+PopMenu_1 MENU
+{
+	POPUP ""
+	{
+		MENUITEM "&Import ...", IDM_IMPORT
+		MENUITEM SEPARATOR
+		POPUP "&background color"
+		{
+		      MENUITEM	"&White",       IDM_WHITE, CHECKED
+		      MENUITEM  "&Lt_gray",     IDM_LTGRAY
+		      MENUITEM  "&Gray",        IDM_GRAY
+		      MENUITEM  "&Dk_gray",     IDM_DKGRAY
+		      MENUITEM  "&Black",       IDM_BLACK
+		}
+	}		
+}
