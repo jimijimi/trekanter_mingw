@@ -1,7 +1,10 @@
 This is the C version of Trekanter, a very simple STL geometry viewer for the
 WIndows OS. This version improves and extend the previously released trekante.rb Ruby version.
 
-Current GitHub status as of Nov 21, 2015: I am about to finish to upload the code. I have
+Nov 23, 2015: All necessary files have been uploaded and the program should compile without
+issues.
+
+Nov 21, 2015: I am about to finish to upload the code. I have
 been doing cleaning and text format changes. It may take a few more days to fully complete that.
 
 
