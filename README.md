@@ -97,7 +97,8 @@ Install the crosscompilation toolchain indicated above. It should work on any Li
 	
 This will produce two exe files, one for Windows 32 bits and the other for Windows 64 bits.
 
-     $ trekanter --help  <enter>
+     $ trekanter32 --help  <enter>
+     $ trekanter64 --help  <enter>
 
 To show the help. 
 
@@ -110,3 +111,5 @@ Screenshots
 ![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_002.jpg)
 ![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_003.jpg)
 ![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_004.jpg)
+![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_005.jpg)
+![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_006.jpg)
