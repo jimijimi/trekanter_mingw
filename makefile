@@ -13,13 +13,13 @@
 # to compile: navigate to the source folder and type: make <enter>
 
 
-all: trekant32 trekant64
+all: trekanter32 trekanter64
 
 #======================Windows 32bits=================================
 
-trekant32: resources32
+trekanter32: resources32
 	@echo - Compiling TrekantER for windows 32bits
-	@i686-w64-mingw32-gcc \
+	@i686-w64-mingw32-gcc -DARCH=32 \
 			J_fonts.c \
 			J_number.c \
 			J_string.c \
@@ -29,7 +29,7 @@ trekant32: resources32
 			trekant.c \
 			resources32.o \
 			-lgdi32 -lcomdlg32 -lopengl32 -lglu32 -lglaux -lm \
-			-o trekant32.exe	
+			-o trekanter32.exe	
 
 resources32: icofile
 	@echo - Compiling resource file for Win 32bits application.
@@ -37,9 +37,9 @@ resources32: icofile
 
 #=======================Windows 64bits================================
 
-trekant64: resources64
+trekanter64: resources64
 	@echo - Compiling TrekantER for Windows 64bits
-	@x86_64-w64-mingw32-gcc \
+	@x86_64-w64-mingw32-gcc -DARCH=64\
 		J_fonts.c \
 		J_number.c \
 		J_string.c \
@@ -49,7 +49,7 @@ trekant64: resources64
 		trekant.c \
 		resources64.o \
 		-lopengl32 -lgdi32 -lcomdlg32 -lglu32 -lm\
-		-o trekant64.exe
+		-o trekanter64.exe
 
 resources64: icofile
 	@echo - Compiling resource file for Win 64bits application.	
