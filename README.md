@@ -113,3 +113,6 @@ Screenshots
 ![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_004.jpg)
 ![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_005.jpg)
 ![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_006.jpg)
+
+The Tesla Model S 3D model was from: http://3dmag.org/en/market/download/item/227
+
