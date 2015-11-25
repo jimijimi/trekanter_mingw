@@ -12,8 +12,8 @@
 
 
 #define APPLICATION_ABBREVIATION_STRING  "TRK"
-#define APPLICATION_NAME_STRING          "trekanter"
-#define _VERSION_ "0.48.2"
+#define APPLICATION_NAME_STRING          "Trekanter"
+#define _VERSION_ "0.48.3"
 
 #ifndef PI
 #define PI 3.1415926535897
