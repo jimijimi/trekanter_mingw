@@ -51,12 +51,18 @@ Treakenter C is not perfect and many changes will be carried out in the near/mid
   immediately see some awkward code. I am also working on this.  
 - The code lacks comments but I believe most of it is self-explanatory.
 - The code contains some 'magic' numbers those will be addressed in a future version.  
-- Selection has not been implemented yet. I have a ruby prototype now and I will translate it
-  to C soon.
+- Selection has not been implemented yet. I have a ruby prototype with selection now and
+  I will translate it to C soon.
 - It will read any NASTRAN files ( short, long, open format and with/withou continuation lines )
 - It will read OBJ/wavefront files.  
 - I will try to include additional formats if I can find the "format" specification.
 
+
+Trekanter C what is in the future.
+
+- Under the hood my own CFD engine. 
+- More to come, I will be writting my progress here. 
+  
 
 My development environment is:
 
@@ -97,3 +103,10 @@ To show the help.
 
   
 
+Screenshots
+===========
+
+![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_001.jpg)
+![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_002.jpg)
+![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_003.jpg)
+![Picture](https://raw.github.com/jimijimi/trekanter_mingw/master/pictures/trekanter_004.jpg)
