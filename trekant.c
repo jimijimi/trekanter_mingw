@@ -915,7 +915,7 @@ WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ){
 		message_box_id =
 			CBTMessageBox( hWnd, 
 				       _T( "Do you want to quit the application?" ), 
-				       _T( "Modelbucket is closing." ), 
+				       _T( "Trekanter is closing." ), 
 				       MB_APPLMODAL | MB_YESNO );
 		switch( message_box_id ){
 		case IDYES:
@@ -1022,7 +1022,7 @@ WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ){
 			message_box_id =
 				CBTMessageBox( hWnd, 
 					       _T( "Do you want to quit the application?" ), 
-					       _T( "Modelbucket is closing." ), 
+					       _T( "Trekanter is closing." ), 
 					       MB_APPLMODAL | MB_YESNO );
 			
 			switch( message_box_id ){
@@ -3356,19 +3356,19 @@ showHelp( void )
 		"                 Windows(R) 8\n"
 		"                 Wine\n"
 		"                 ReactOS\n"
-		" USAGE:\n"
-		"    (1)  trekanter [ STL_FILE ] <enter>\n"
-		"    (2)  trekanter --load-file [ STL_FILE ]\n"
-		"    (3)  trekanter -f [ STL_FILE ]\n"
-		"         Starts the application and load the STL file.\n\n"
-		"    (4)  trekanter --version\n"
-		"    (5)  trekanter -v\n"
-		"         Shows program version\n\n"
-		"    (6)  trekanter --license\n"
-		"         Shows program license information\n\n"
-		"    (7)  trekanter --help\n"
-		"    (8)  trekanter -h\n"
-		"         Shows this help screen\n\n"
+		" USAGE:\n" );
+	printf(	"    (1)  trekanter%d [ STL_FILE ] <enter>\n", ARCH );
+	printf(	"    (2)  trekanter%d --load-file [ STL_FILE ]\n", ARCH );
+	printf(	"    (3)  trekanter%d -f [ STL_FILE ]\n", ARCH );
+	printf(	"         Starts the application and load the STL file.\n\n" );
+	printf(	"    (4)  trekanter%d --version\n", ARCH );
+	printf(	"    (5)  trekanter%d -v\n", ARCH );
+	printf(	"         Shows program version\n\n" );
+	printf(	"    (6)  trekanter%d --license\n", ARCH );
+	printf(	"         Shows program license information\n\n" );
+	printf(	"    (7)  trekanter%d --help\n", ARCH );
+	printf(	"    (8)  trekanter%d -h\n", ARCH );
+	printf(	"         Shows this help screen\n\n"
 		" GUI CONTROLS:\n"
 		"    MOUSE:\n"
 		"       Left click + drag          : rotates model.\n"
@@ -3437,40 +3437,40 @@ showHelp( void )
 		"       Quit ...                    : Quits the application\n\n"
 		" COMMAND LINE TOOLS:\n"
 		"    GEOMETRY GENERATION\n"
-		"       General command\n"
-		"       (1)  trekanter --shape       SHAPE \\\n"
-		"                      --side-length N \\\n"
+		"       General command\n" );
+	printf(	"       (1)  trekanter%d --shape       SHAPE \\\n", ARCH );
+	printf(	"                      --side-length N \\\n"
 		"                      --position    X,Y,Z \\\n"
 		"                      --color       R,G,B \\\n"
 		"                      --out-file    OUTPUT_STL_FILE\n\n"
-		"       Generates a square plane and save it as a STL file\n"
-		"       (2) trekanter --shape        polygon \\\n"
-		"                     --num-sides    N \\\n"
+		"       Generates a square plane and save it as a STL file\n" );
+	printf(	"       (2) trekanter%d --shape        polygon \\\n", ARCH );
+	printf(	"                     --num-sides    N \\\n"
 		"                     --side-length  L \\\n"
 		"                     --position     X,Y,Z \\\n"
 		"                     --normal       NX,NY,NZ \\\n"
 		"                     --color        R,G,B \\\n"
 		"                     --out-file     OUTPUT_FILE_NAME\n\n"
-		"       Generates a sphere\n"
-		"       (3) trekanter --shape        sphere \\\n"
-		"                     --radius       R \\\n"
+		"       Generates a sphere\n" );
+	printf(	"       (3) trekanter%d --shape        sphere \\\n", ARCH );
+	printf(	"                     --radius       R \\\n"
 		"                     --position     X,Y,Z \\\n"
 		"                     --normal       NX,NY,NZ \\\n"
 		"                     --color        R,G,B \\\n"
 		"                     --out-file     OUTPUT_FILE_NAME\n"
 		"                     --refinement-level [ 1 - 5 ]\n\n"
-		"       Generates a prism\n"
-		"       (4) trekanter --shape        prism \\\n"
-		"                     --radius       R \\\n"
+		"       Generates a prism\n" ); 
+	printf(	"       (4) trekanter%d --shape        prism \\\n", ARCH );
+	printf(	"                     --radius       R \\\n"
 		"                     --num-sides    NS \\\n"
 		"                     --position     X,Y,Z \\\n"
 		"                     --normal       NX,NY,NZ \\\n"
 		"                     --color        R,G,B \\\n"
 		"                     --out-file     OUTPUT_FILE_NAME \\\n"
 		"                     --height       H\n\n"
-		"       Generates a pyramid\n"
-		"       (5) trekanter --shape        pyramid \\\n"
-		"                     --radius       R \\\n"
+		"       Generates a pyramid\n" );
+	printf(	"       (5) trekanter%d --shape        pyramid \\\n", ARCH );
+	printf(	"                     --radius       R \\\n"
 		"                     --num-sides    NS \\\n"
 		"                     --position     X,Y,Z \\\n"
 		"                     --normal       NX,NY,NZ \\\n"
@@ -3478,21 +3478,21 @@ showHelp( void )
 		"                     --out-file     OUTPUT_FILE_NAME \\\n"
 		"                     --height       H\n\n"
 		"    GEOMETRY TRANSFORMATION:\n"
-		"       Scale a STL file by a given factor\n"
-		"       (1) trekanter --load-file  STL_FILE \\\n"
-		"                     --out-file   OUTPUT_STL_FILE \\\n"
+		"       Scale a STL file by a given factor\n" );
+	printf(	"       (1) trekanter%d --load-file  STL_FILE \\\n", ARCH );
+	printf(	"                     --out-file   OUTPUT_STL_FILE \\\n"
 		"                     --scale      SCALING_FACTOR\n\n"
-		"       Translate a STL file\n"
-		"       (2) trekanter --load-file  STL_FILE \\\n"
-		"                     --out-file   OUTPUT_STL_FILE \\\n"
+		"       Translate a STL file\n" );
+	printf(	"       (2) trekanter%d --load-file  STL_FILE \\\n", ARCH );
+	printf(	"                     --out-file   OUTPUT_STL_FILE \\\n"
 		"                     --translate  X,Y,Z\n\n"
-		"       Mirror a STL file\n"
-		"       (3) trekanter --load-file  STL_FILE \\\n"
-		"                     --out-file   OUTPUT_STL_FILE \\\n"
+		"       Mirror a STL file\n" );
+	printf(	"       (3) trekanter%d --load-file  STL_FILE \\\n", ARCH );
+	printf(	"                     --out-file   OUTPUT_STL_FILE \\\n"
 		"                     --mirror     AXIS\n\n"
-		"       Rotate a STL file\n"
-		"       (4) trekanter --load-file  STL_FILE \\\n"
-		"                     --out-file   OUTPUT_STL_FILE \\\n"
+		"       Rotate a STL file\n" );
+	printf(	"       (4) trekanter%d --load-file  STL_FILE \\\n", ARCH );
+	printf(	"                     --out-file   OUTPUT_STL_FILE \\\n"
 		"                     --rotate     DEGREES  \\\n"
 		"                     --pick-point X,Y,Z    \\\n"
 		"                     --normal     NX,NY,NZ \n\n"
@@ -3521,8 +3521,9 @@ showHelp( void )
 		"       -s  --shape     shape type\n"
 
 		" EXAMPLES:\n"
-		"   CUBE:\n"
-		"      trekant --shape cube --side-length 2 --position 2,2,2 --color 255,0,0\n\n"
+		"   CUBE:\n" );
+	printf(	"      trekanter%d --shape cube --side-length 2 ", ARCH );
+	printf(	"--position 2,2,2 --color 255,0,0\n\n"
 		"      Generates a cube of side 2 with center at 2,2,2 and color red\n"
 		"\n" );
 }
