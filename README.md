@@ -103,6 +103,23 @@ This will produce two exe files, one for Windows 32 bits and the other for Windo
 To show the help. 
 
   
+Precompiled Binary Builds
+=========================
+
+The folder builds/ contains precompiled binaries
+
+32-bit build checksums. trekanter32.exe
+
+md5sum    4D65AB6828F72021E7A3A94A02AE7D4B
+sha1sum   A8ECF77D0226F3D612050C32C50C0646E80E2D2D
+sha256sum 3D3C3573C1F5BBE5660929E6DF4ABB1050E9A4BAC6D32C5F87750118CB7619B4
+
+64-bit build checksums. trekanter64.exe
+
+md5sum    3AC6BD93DC4572908B11CCC7AAADDBBD    
+sha1sum   CCB48FCA5EEAEE24FEE3B0E0C90D713847468791
+sha256sum B0925E7E3A45E77B850DD16848E39D96FE175B84EF2E2257A68EA4FF753539C7
+
 
 Screenshots
 ===========
