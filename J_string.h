@@ -11,8 +11,8 @@
 
 #include<tchar.h>
 
-#ifndef _J_string_h
-#define _J_string_h
+#ifndef J_STRING_H
+#define J_STRING_H
 
 #ifdef __cplusplus
 extern "C"{

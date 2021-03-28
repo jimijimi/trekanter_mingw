@@ -7,9 +7,8 @@
   LICENSE.txt and the end of this file.
 */
 
-
-#ifndef _J_modelManagement_h
-#define _J_modelManagement_h
+#ifndef J_MODELMANAGEMENT_H
+#define J_MODELMANAGEMENT_H
 
 #ifdef __cplusplus
 extern "C"{

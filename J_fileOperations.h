@@ -12,8 +12,8 @@
 
 #include<math.h>
 
-#ifndef _J_fileOperations_h
-#define _J_fileOperations_h
+#ifndef J_FILEOPERATIONS_H
+#define J_FILEOPERATIONS_H
 
 enum J_filetype{ STL_A = 0,
 		 STL_B = 1,

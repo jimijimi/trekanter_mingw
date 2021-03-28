@@ -20,6 +20,7 @@ all: trekanter32 trekanter64
 trekanter32: resources32
 	@echo - Compiling TrekantER for windows 32bits
 	@i686-w64-mingw32-gcc -DARCH=32 \
+			-DNDEBUG \
 			J_fonts.c \
 			J_number.c \
 			J_string.c \
@@ -39,7 +40,8 @@ resources32: icofile
 
 trekanter64: resources64
 	@echo - Compiling TrekantER for Windows 64bits
-	@x86_64-w64-mingw32-gcc -DARCH=64\
+	@x86_64-w64-mingw32-gcc -DARCH=64 \
+		-DNDEBUG \
 		J_fonts.c \
 		J_number.c \
 		J_string.c \
@@ -64,6 +66,23 @@ icofile:
 
 
 #======================================================================
+
+
+debug: resources64
+	@echo - Compiling TrekantER for Windows 64bits in DEBUG mode.
+	@x86_64-w64-mingw32-gcc -DARCH=64 \
+		J_fonts.c \
+		J_number.c \
+		J_string.c \
+		J_fileOperations.c \
+		J_modelManagement.c \
+		J_3dObjects.c \
+		trekant.c \
+		resources64.o \
+		-lopengl32 -lgdi32 -lcomdlg32 -lglu32 -lm\
+		-o trekanter64d.exe
+	cp trekanter64d.exe ~/.precursor/bin
+
 
 
 

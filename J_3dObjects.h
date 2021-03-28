@@ -20,9 +20,9 @@
 #define _UNICODE
 #endif
 
-#ifndef _J_3dobjects_h
-#define _J_3dobjects_h
-#endif
+#ifndef J_3DOBJECTS_H
+#define J_3DOBJECTS_H
+
 
 #include "J_modelManagement.h"
 #include "J_string.h"
@@ -112,6 +112,8 @@ void                      J_3dObjectPolygon( struct ShapeOptions,
 
 void                      J_3dObjectTransform( TCHAR * ,
 					       struct ShapeOptions );
+
+#endif
 
 /*
   GNU GENERAL PUBLIC LICENSE

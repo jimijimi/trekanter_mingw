@@ -11,980 +11,969 @@
 
 #include "J_3dObjects.h"
 
-void  J_3dObjectErrorExit( )
-{
-	printf( "Only one transformation at a time.\n");
-	printf( "Select scaling or translation or mirror\n" );
-	exit( 1 );
+void  J_3dObjectErrorExit( ) {
+  printf( "Only one transformation at a time.\n");
+  printf( "Select scaling or translation or mirror\n" );
+  exit( 1 );
 }
 
 
 struct vector3d_f J_MoveRFToOrigin( struct vector3d_f reference_origin,
-				    struct vector3d_f point )
-{
-	struct vector3d_f moved;
-	moved.x = point.x - reference_origin.x;
-	moved.y = point.y - reference_origin.y;
-	moved.z = point.z - reference_origin.z;
-	return moved;
+				    struct vector3d_f point ) {
+  struct vector3d_f moved;
+  moved.x = point.x - reference_origin.x;
+  moved.y = point.y - reference_origin.y;
+  moved.z = point.z - reference_origin.z;
+  return moved;
 }
 
 
 struct vector3d_f J_RecoverRF( struct vector3d_f reference_origin,
-			       struct vector3d_f point )
-{
-	struct vector3d_f recovered;
-	recovered.x = point.x + reference_origin.x;
-	recovered.y = point.y + reference_origin.y;
-	recovered.z = point.z + reference_origin.z;
-	return recovered;
+			       struct vector3d_f point ) {
+  struct vector3d_f recovered;
+  recovered.x = point.x + reference_origin.x;
+  recovered.y = point.y + reference_origin.y;
+  recovered.z = point.z + reference_origin.z;
+  return recovered;
 }
 
 
-FILE* J_3dObjectCheckFile( TCHAR* file_name )
-{
-	FILE *f = _tfopen( file_name, _T( "r" ) );
+FILE* J_3dObjectCheckFile( TCHAR* file_name ) {
+  FILE *f = _tfopen( file_name, _T( "r" ) );
 
-	if ( !f ){
-		_tprintf( _T("%s : File not found\n"), file_name );
-		exit( 1 );
-	}
+  if ( !f ){
+    _tprintf( _T("%s : File not found\n"), file_name );
+    exit( 1 );
+  }
 }
 
 
 void  J_3dObjectSaveText( char* text_to_save,
-			  char* file_to_save )
-{
-	FILE* fs = fopen( file_to_save, "w" ); 
+			  char* file_to_save ) {
+  FILE* fs = fopen( file_to_save, "w" ); 
 
-	fprintf( fs, "%s", text_to_save );
-	fclose( fs );
+  fprintf( fs, "%s", text_to_save );
+  fclose( fs );
 }
 
 
-FILE* J_3dObjectCheckFile_ascii( char* file_name )
-{
-	FILE *f = fopen( file_name, "r" );
+FILE* J_3dObjectCheckFile_ascii( char* file_name ) {
+  FILE *f = fopen( file_name, "r" );
 
-	if ( !f ){
-		printf( "%s : File not found\n", file_name );
-		exit( 1 );
-	}
+  if ( !f ){
+    printf( "%s : File not found\n", file_name );
+    exit( 1 );
+  }
 }
 
 
-void J_PrintShapeOptions( struct ShapeOptions shape_options )
-{
-	if ( shape_options.shape_name )
-		_tprintf( _T( " Shape name            : %s\n" ),
-			  shape_options.shape_name );
-	if ( shape_options.shape_color)
-		_tprintf( _T( " Shape color           : %s\n" ),
-			  shape_options.shape_color );
-	if ( shape_options.shape_width )
-		_tprintf( _T( " Shape width           : %s\n" ),
-			  shape_options.shape_width );
-	if ( shape_options.shape_height )
-		_tprintf( _T( " Shape height          : %s\n" ),
-			  shape_options.shape_height );
-	if ( shape_options.shape_radius )
-		_tprintf( _T( " Shape radius          : %s\n" ),
-			  shape_options.shape_radius );
-	if ( shape_options.shape_normal )
-		_tprintf( _T( " Shape normal          : %s\n" ),
-			  shape_options.shape_normal );
-	if ( shape_options.shape_num_sides &&
-	     _tcscmp( shape_options.shape_name,
-		      _T( "sphere" ) ) ){
-		_tprintf( _T( " Shape num sides       : %s\n" ),
-			  shape_options.shape_num_sides );
-	}
-	if ( shape_options.shape_side_length )
-		_tprintf( _T( " Shape side length     : %s\n" ),
-			  shape_options.shape_side_length );
-	if ( shape_options.shape_position )
-		_tprintf( _T( " Shape center position : %s\n" ),
-			  shape_options.shape_position );
-	if ( shape_options.shape_out_file )
-		_tprintf( _T( " Shape out file        : %s\n" ),
-			  shape_options.shape_out_file );
+void J_PrintShapeOptions( struct ShapeOptions shape_options ) {
+  if ( shape_options.shape_name )
+    _tprintf( _T( " Shape name            : %s\n" ),
+	      shape_options.shape_name );
+  if ( shape_options.shape_color)
+    _tprintf( _T( " Shape color           : %s\n" ),
+	      shape_options.shape_color );
+  if ( shape_options.shape_width )
+    _tprintf( _T( " Shape width           : %s\n" ),
+	      shape_options.shape_width );
+  if ( shape_options.shape_height )
+    _tprintf( _T( " Shape height          : %s\n" ),
+	      shape_options.shape_height );
+  if ( shape_options.shape_radius )
+    _tprintf( _T( " Shape radius          : %s\n" ),
+	      shape_options.shape_radius );
+  if ( shape_options.shape_normal )
+    _tprintf( _T( " Shape normal          : %s\n" ),
+	      shape_options.shape_normal );
+  if ( shape_options.shape_num_sides &&
+       _tcscmp( shape_options.shape_name,
+		_T( "sphere" ) ) ){
+    _tprintf( _T( " Shape num sides       : %s\n" ),
+	      shape_options.shape_num_sides );
+  }
+  if ( shape_options.shape_side_length )
+    _tprintf( _T( " Shape side length     : %s\n" ),
+	      shape_options.shape_side_length );
+  if ( shape_options.shape_position )
+    _tprintf( _T( " Shape center position : %s\n" ),
+	      shape_options.shape_position );
+  if ( shape_options.shape_out_file )
+    _tprintf( _T( " Shape out file        : %s\n" ),
+	      shape_options.shape_out_file );
 }
 
 
 struct TemporaryTriangle  J_BuildTriangle( struct vector3d_f n,
 					   struct vector3d_f p0,
 					   struct vector3d_f p1,
-					   struct vector3d_f p2 )
-{
-	struct TemporaryTriangle triangle;
+					   struct vector3d_f p2 ) {
+  struct TemporaryTriangle triangle;
 	
-	snprintf( triangle.normal,
-		  STD_BUFFER_SIZE,
-		  "facet normal %f %f %f\n",
-		  n.x, n.y, n.z );
-	snprintf( triangle.vertex1,
-		  STD_BUFFER_SIZE,
-		  "vertex %f %f %f\n",
-		  p0.x, p0.y, p0.z );
-	snprintf( triangle.vertex2,
-		  STD_BUFFER_SIZE,
-		  "vertex %f %f %f\n",
-		  p1.x, p1.y, p1.z );
-	snprintf( triangle.vertex3,
-		  STD_BUFFER_SIZE,
-		  "vertex %f %f %f\n",
-		  p2.x, p2.y, p2.z );
+  snprintf( triangle.normal,
+	    STD_BUFFER_SIZE,
+	    "facet normal %f %f %f\n",
+	    n.x, n.y, n.z );
+  snprintf( triangle.vertex1,
+	    STD_BUFFER_SIZE,
+	    "vertex %f %f %f\n",
+	    p0.x, p0.y, p0.z );
+  snprintf( triangle.vertex2,
+	    STD_BUFFER_SIZE,
+	    "vertex %f %f %f\n",
+	    p1.x, p1.y, p1.z );
+  snprintf( triangle.vertex3,
+	    STD_BUFFER_SIZE,
+	    "vertex %f %f %f\n",
+	    p2.x, p2.y, p2.z );
 
-	return triangle;
+  return triangle;
 }
 
 
 char * STLFileTriangleBlock( struct TemporaryTriangle triangle,
-			     char* string )
-{
-	string = J_cat( string, triangle.normal );
-	string = J_cat( string, "\t\touter loop\n\t\t\t" );
-	string = J_cat( string, triangle.vertex1 );
-	string = J_cat( string, "\t\t\t" );
-	string = J_cat( string, triangle.vertex2 );
-	string = J_cat( string, "\t\t\t" );
-	string = J_cat( string, triangle.vertex3 );
-        string = J_cat( string, "\t\tend loop\n" );
-	string = J_cat( string, "\tendfacet\n" );
+			     char* string ) {
+  string = J_cat( string, triangle.normal );
+  string = J_cat( string, "\t\touter loop\n\t\t\t" );
+  string = J_cat( string, triangle.vertex1 );
+  string = J_cat( string, "\t\t\t" );
+  string = J_cat( string, triangle.vertex2 );
+  string = J_cat( string, "\t\t\t" );
+  string = J_cat( string, triangle.vertex3 );
+  string = J_cat( string, "\t\tend loop\n" );
+  string = J_cat( string, "\tendfacet\n" );
 
-	return string;
+  return string;
 }
 
 
 void J_3dObjectCubes( struct ShapeOptions shape_options,
-		      struct J_model **model )
-{
-	;
+		      struct J_model **model ) {
+  ;
 }
 
 
 void  J_3dObjectPolygon( struct ShapeOptions shape_options,
-			 struct J_model **model )
-{
-	struct J_list *position = NULL;
-	struct J_list *color = NULL;
-	struct J_list *normal = NULL;
-	struct J_list *name = NULL;
+			 struct J_model **model ) {
+  struct J_list *position = NULL;
+  struct J_list *color = NULL;
+  struct J_list *normal = NULL;
+  struct J_list *name = NULL;
 	
-	struct vector3d_f ref_p;
-	struct vector3d_f p0;
-	struct vector3d_f p0_shifted;
-	struct vector3d_f p1;
-	struct vector3d_f p1_shifted;
-	struct vector3d_f p2;
-	struct vector3d_f p2_shifted;
-	struct vector3d_f n0;
-	struct vector3d_f nz0;
-	struct vector3d_f rotated_1;
-	struct vector3d_f rotated_2;
-	struct vector3d_f axys_of_rotation;
-	struct vector3d_f temp_normal_1;
-	struct vector3d_f temp_normal_2;
+  struct vector3d_f ref_p;
+  struct vector3d_f p0;
+  struct vector3d_f p0_shifted;
+  struct vector3d_f p1;
+  struct vector3d_f p1_shifted;
+  struct vector3d_f p2;
+  struct vector3d_f p2_shifted;
+  struct vector3d_f n0;
+  struct vector3d_f nz0;
+  struct vector3d_f rotated_1;
+  struct vector3d_f rotated_2;
+  struct vector3d_f axys_of_rotation;
+  struct vector3d_f temp_normal_1;
+  struct vector3d_f temp_normal_2;
 	
-	struct TemporaryTriangle triangle;
-	struct TemporaryTriangle triangle_body_1;
-	struct TemporaryTriangle triangle_body_2;
+  struct TemporaryTriangle triangle;
+  struct TemporaryTriangle triangle_body_1;
+  struct TemporaryTriangle triangle_body_2;
 	
-	char *file_content = NULL;
-	unsigned int i = 0;
-	unsigned int j = 0;
-	unsigned int k = 0;
-	float angle = 0.0f;
-	float angle_b2v = 0.0f;
-	float angle_b2v_deg = 0.0f;
-	float s = 0.0f;
-	float d = 0.0f;
-	float temp_r = 0.0f;
-	float temp_theta = 0.0f;
-	float temp_phi = 0.0f;
-	unsigned int sides = 3;
-	float radius = 1.0f;
-	float height = 0.0f;
+  char *file_content = NULL;
+  unsigned int i = 0;
+  unsigned int j = 0;
+  unsigned int k = 0;
+  float angle = 0.0f;
+  float angle_b2v = 0.0f;
+  float angle_b2v_deg = 0.0f;
+  float s = 0.0f;
+  float d = 0.0f;
+  float temp_r = 0.0f;
+  float temp_theta = 0.0f;
+  float temp_phi = 0.0f;
+  unsigned int sides = 3;
+  float radius = 1.0f;
+  float height = 0.0f;
 
-	unsigned int pyramid = 0;
+  unsigned int pyramid = 0;
 
-	unsigned int sphere = 0;
-	unsigned int sphere_rlevel = 1;
-	float unit_x            = 0.0f;
-	float unit_y            = 0.0f;
-	float sphere_x          = 0.0f;
-	float sphere_y          = 0.0f;
-	float sphere_z          = 0.0f;
-	float sphere_x1         = 0.0f;
-	float sphere_y1         = 0.0f;
-	float sphere_z1         = 0.0f;
-	unsigned int sphere_ring = 0;
-	unsigned int ring_switcher = 0;
-	struct vector3d_f sphere_p;
-	struct vector3d_f sphere_p1;
+  unsigned int sphere = 0;
+  unsigned int sphere_rlevel = 1;
+  float unit_x            = 0.0f;
+  float unit_y            = 0.0f;
+  float sphere_x          = 0.0f;
+  float sphere_y          = 0.0f;
+  float sphere_z          = 0.0f;
+  float sphere_x1         = 0.0f;
+  float sphere_y1         = 0.0f;
+  float sphere_z1         = 0.0f;
+  unsigned int sphere_ring = 0;
+  unsigned int ring_switcher = 0;
+  struct vector3d_f sphere_p;
+  struct vector3d_f sphere_p1;
 
-	unsigned int same_points = 0;
-	struct vector3d_f **ring_1 = NULL;
-	struct vector3d_f **ring_2 = NULL;
+  unsigned int same_points = 0;
+  struct vector3d_f **ring_1 = NULL;
+  struct vector3d_f **ring_2 = NULL;
 
-	char *ascii_sides = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_name + = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_position = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_color = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_normal = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_radius = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_side_length = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_height = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_rlevel = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_sides = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_name = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_position = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_color = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_normal = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_radius = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_side_length = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_height = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_rlevel = malloc( STD_BUFFER_SIZE * sizeof( char ) );
 	
-	char temp_char[ 300 ];
-	char normal_assy[ STD_BUFFER_SIZE ];
-	char vertex_assy[ STD_BUFFER_SIZE ];
+  char temp_char[ 300 ];
+  char normal_assy[ STD_BUFFER_SIZE ];
+  char vertex_assy[ STD_BUFFER_SIZE ];
 	
-	if ( !shape_options.shape_name ){
-		printf( "A shape type was not specified.\n" );
-		exit( 1 );
-	}
-	if ( shape_options.shape_side_length && shape_options.shape_radius ){
-		printf( "Set radius or side length but not both\n" );
-		exit( 1 );
-	}
+  if ( !shape_options.shape_name ){
+    printf( "A shape type was not specified.\n" );
+    exit( 1 );
+  }
+  if ( shape_options.shape_side_length && shape_options.shape_radius ){
+    printf( "Set radius or side length but not both\n" );
+    exit( 1 );
+  }
 	
-	// Set the defaults if these are not provided 
-	if ( !_tcscmp( shape_options.shape_name,
-		       _T("cube" ) ) ){
-		shape_options.shape_num_sides = _T( "4" );
-		if ( !shape_options.shape_side_length &&
-		     !shape_options.shape_radius ){
-			shape_options.shape_side_length = _T( "1" );
-			shape_options.shape_height = _T( "1" );
-		}
-		if ( !shape_options.shape_side_length ){
-			shape_options.shape_side_length = _T( "1" );
-			shape_options.shape_height = _T( "1" );
-		}
-		if ( !shape_options.shape_height ){
-			shape_options.shape_height = shape_options.shape_side_length;
-		}
-		if ( !shape_options.shape_out_file  ){
-			shape_options.shape_out_file = _T( "cube_001.stl" );
-		}
-		if ( !shape_options.shape_num_sides ){
-			shape_options.shape_num_sides = _T( "4" );
-		}
-		if ( !shape_options.shape_color ){
-			shape_options.shape_color = _T( "255,0,0" );
-		}
-	}
-	else if ( !_tcscmp( shape_options.shape_name,
-			    _T("prism" ) ) ){
-		if ( !shape_options.shape_height ){
-			shape_options.shape_height = _T( "3" );
-		}
-		if ( !shape_options.shape_out_file  ){
-			shape_options.shape_out_file = _T( "prism_001.stl" );
-		}
-		if ( !shape_options.shape_num_sides ){
-			shape_options.shape_num_sides = _T( "3" );
-		}
-		if ( !shape_options.shape_color ){
-			shape_options.shape_color = _T( "0,200,10" );
-		}
-	}
-	else if ( !_tcscmp( shape_options.shape_name,
-			    _T("pyramid" ) ) ){
-		pyramid = 1;
-		if ( !shape_options.shape_height ){
-			shape_options.shape_height = _T( "3" );
-		}
-		if ( !shape_options.shape_out_file  ){
-			shape_options.shape_out_file = _T( "pyramid_001.stl" );
-		}
-		if ( !shape_options.shape_num_sides ){
-			shape_options.shape_num_sides = _T( "3" );
-		}
-		if ( !shape_options.shape_color ){
-			shape_options.shape_color = _T( "0,0,255" );
-		}
-	}
-	else if ( !_tcscmp( shape_options.shape_name,
-			    _T("polygon" ) ) ){
-		if ( !shape_options.shape_out_file  ){
-			shape_options.shape_out_file = _T( "polygon_001.stl" );
-		}
-		if ( !shape_options.shape_num_sides ){
-			shape_options.shape_num_sides = _T( "3" );
-		}
-		if ( !shape_options.shape_color ){
-			shape_options.shape_color = _T( "255,255,0" );
-		}
-	}
-	else{
-		sphere        = 1;
-		sphere_rlevel = 1;
-		if ( !shape_options.shape_out_file  ){
-			shape_options.shape_out_file = _T( "sphere_001.stl" );
-		}
-		if ( !shape_options.shape_color ){
-			shape_options.shape_color = _T( "255,128,0" );
-		}
-		if ( !shape_options.shape_num_sides ){
-			shape_options.shape_num_sides = _T( "8" );
-		}
-		if ( !shape_options.shape_refinement_level ){
-			shape_options.shape_refinement_level = _T( "1" );
-		}
-	}
+  // Set the defaults if these are not provided 
+  if ( !_tcscmp( shape_options.shape_name,
+		 _T("cube" ) ) ){
+    shape_options.shape_num_sides = _T( "4" );
+    if ( !shape_options.shape_side_length &&
+	 !shape_options.shape_radius ){
+      shape_options.shape_side_length = _T( "1" );
+      shape_options.shape_height = _T( "1" );
+    }
+    if ( !shape_options.shape_side_length ){
+      shape_options.shape_side_length = _T( "1" );
+      shape_options.shape_height = _T( "1" );
+    }
+    if ( !shape_options.shape_height ){
+      shape_options.shape_height = shape_options.shape_side_length;
+    }
+    if ( !shape_options.shape_out_file  ){
+      shape_options.shape_out_file = _T( "cube_001.stl" );
+    }
+    if ( !shape_options.shape_num_sides ){
+      shape_options.shape_num_sides = _T( "4" );
+    }
+    if ( !shape_options.shape_color ){
+      shape_options.shape_color = _T( "255,0,0" );
+    }
+  }
+  else if ( !_tcscmp( shape_options.shape_name,
+		      _T("prism" ) ) ){
+    if ( !shape_options.shape_height ){
+      shape_options.shape_height = _T( "3" );
+    }
+    if ( !shape_options.shape_out_file  ){
+      shape_options.shape_out_file = _T( "prism_001.stl" );
+    }
+    if ( !shape_options.shape_num_sides ){
+      shape_options.shape_num_sides = _T( "3" );
+    }
+    if ( !shape_options.shape_color ){
+      shape_options.shape_color = _T( "0,200,10" );
+    }
+  }
+  else if ( !_tcscmp( shape_options.shape_name,
+		      _T("pyramid" ) ) ){
+    pyramid = 1;
+    if ( !shape_options.shape_height ){
+      shape_options.shape_height = _T( "3" );
+    }
+    if ( !shape_options.shape_out_file  ){
+      shape_options.shape_out_file = _T( "pyramid_001.stl" );
+    }
+    if ( !shape_options.shape_num_sides ){
+      shape_options.shape_num_sides = _T( "3" );
+    }
+    if ( !shape_options.shape_color ){
+      shape_options.shape_color = _T( "0,0,255" );
+    }
+  }
+  else if ( !_tcscmp( shape_options.shape_name,
+		      _T("polygon" ) ) ){
+    if ( !shape_options.shape_out_file  ){
+      shape_options.shape_out_file = _T( "polygon_001.stl" );
+    }
+    if ( !shape_options.shape_num_sides ){
+      shape_options.shape_num_sides = _T( "3" );
+    }
+    if ( !shape_options.shape_color ){
+      shape_options.shape_color = _T( "255,255,0" );
+    }
+  }
+  else{
+    sphere        = 1;
+    sphere_rlevel = 1;
+    if ( !shape_options.shape_out_file  ){
+      shape_options.shape_out_file = _T( "sphere_001.stl" );
+    }
+    if ( !shape_options.shape_color ){
+      shape_options.shape_color = _T( "255,128,0" );
+    }
+    if ( !shape_options.shape_num_sides ){
+      shape_options.shape_num_sides = _T( "8" );
+    }
+    if ( !shape_options.shape_refinement_level ){
+      shape_options.shape_refinement_level = _T( "1" );
+    }
+  }
 
-	if ( !shape_options.shape_position ){
-		shape_options.shape_position = _T( "0,0,0" );
-	}
-	if ( !shape_options.shape_normal ){
-		shape_options.shape_normal = _T( "0,0,1" );
-	}
+  if ( !shape_options.shape_position ){
+    shape_options.shape_position = _T( "0,0,0" );
+  }
+  if ( !shape_options.shape_normal ){
+    shape_options.shape_normal = _T( "0,0,1" );
+  }
 
-	wcstombs( ascii_sides,
-		  shape_options.shape_num_sides,
-		  STD_BUFFER_SIZE );
-	sides = atoi( ascii_sides );
+  wcstombs( ascii_sides,
+	    shape_options.shape_num_sides,
+	    STD_BUFFER_SIZE );
+  sides = atoi( ascii_sides );
 
-	if ( atoi( ascii_sides ) < 3 ){
-		printf("The number of sides is three or more.\n");
-		exit( 1 );
-	}
+  if ( atoi( ascii_sides ) < 3 ){
+    printf("The number of sides is three or more.\n");
+    exit( 1 );
+  }
 
-	wcstombs( ascii_name,
-		  shape_options.shape_out_file,
-		  STD_BUFFER_SIZE );
+  wcstombs( ascii_name,
+	    shape_options.shape_out_file,
+	    STD_BUFFER_SIZE );
 	
-	wcstombs( ascii_position,
-		  shape_options.shape_position,
-		  STD_BUFFER_SIZE );
+  wcstombs( ascii_position,
+	    shape_options.shape_position,
+	    STD_BUFFER_SIZE );
 	
-	wcstombs( ascii_color,
-		  shape_options.shape_color,
-		  STD_BUFFER_SIZE );
+  wcstombs( ascii_color,
+	    shape_options.shape_color,
+	    STD_BUFFER_SIZE );
 	
-	wcstombs( ascii_normal,
-		  shape_options.shape_normal,
-		  STD_BUFFER_SIZE );
+  wcstombs( ascii_normal,
+	    shape_options.shape_normal,
+	    STD_BUFFER_SIZE );
 	
-	if ( shape_options.shape_height ){
-		wcstombs( ascii_height,
-			  shape_options.shape_height,
-			  STD_BUFFER_SIZE );
-		height = atof( ascii_height );
-	}
+  if ( shape_options.shape_height ){
+    wcstombs( ascii_height,
+	      shape_options.shape_height,
+	      STD_BUFFER_SIZE );
+    height = atof( ascii_height );
+  }
 	
-	if ( shape_options.shape_refinement_level ){
-		wcstombs( ascii_rlevel,
-			  shape_options.shape_refinement_level,
-			  STD_BUFFER_SIZE );
-		sphere_rlevel = atoi( ascii_rlevel );
+  if ( shape_options.shape_refinement_level ){
+    wcstombs( ascii_rlevel,
+	      shape_options.shape_refinement_level,
+	      STD_BUFFER_SIZE );
+    sphere_rlevel = atoi( ascii_rlevel );
 
-		if ( sphere_rlevel == 1 ) sides = 8;
-		else if ( sphere_rlevel == 2 ) sides = 16;
-		else if ( sphere_rlevel == 3 ) sides = 32;
-		else if ( sphere_rlevel == 4 ) sides = 64;
-		else if ( sphere_rlevel == 5 ) sides = 128;
-		else{
-			printf("Refinement level is a number between 1 an 5\n");
-			exit( 1 );
-		}
-	}
+    if ( sphere_rlevel == 1 ) sides = 8;
+    else if ( sphere_rlevel == 2 ) sides = 16;
+    else if ( sphere_rlevel == 3 ) sides = 32;
+    else if ( sphere_rlevel == 4 ) sides = 64;
+    else if ( sphere_rlevel == 5 ) sides = 128;
+    else{
+      printf("Refinement level is a number between 1 an 5\n");
+      exit( 1 );
+    }
+  }
        
-	if ( !shape_options.shape_radius ){
-		if ( shape_options.shape_side_length ){
-			wcstombs( ascii_side_length,
-				  shape_options.shape_side_length,
-				  STD_BUFFER_SIZE );
-			s = atof( ascii_side_length );
+  if ( !shape_options.shape_radius ){
+    if ( shape_options.shape_side_length ){
+      wcstombs( ascii_side_length,
+		shape_options.shape_side_length,
+		STD_BUFFER_SIZE );
+      s = atof( ascii_side_length );
 			
-			if ( sides > 2000 ) sides = 2000;
+      if ( sides > 2000 ) sides = 2000;
 
-			radius = s / ( 2 * sin( PI / sides ) );
-		}
-		else{
-			shape_options.shape_radius = _T( "1" );
-			wcstombs( ascii_radius,
-				  shape_options.shape_radius,
-				  STD_BUFFER_SIZE );
-			radius = atof( ascii_radius );
-		}
+      radius = s / ( 2 * sin( PI / sides ) );
+    }
+    else{
+      shape_options.shape_radius = _T( "1" );
+      wcstombs( ascii_radius,
+		shape_options.shape_radius,
+		STD_BUFFER_SIZE );
+      radius = atof( ascii_radius );
+    }
+  }
+  else{
+    wcstombs( ascii_radius,
+	      shape_options.shape_radius,
+	      STD_BUFFER_SIZE );
+
+    radius = atof( ascii_radius );
+  }
+
+  J_PrintShapeOptions( shape_options );
+	
+  position         = J_split( ascii_position, "," );
+
+  // need to test argument values separated by commas to 
+  color            = J_split( ascii_color, "," );
+  normal           = J_split( ascii_normal, "," );
+  name             = J_split( ascii_name, "." );
+
+  // target location
+  ref_p.x          = atof( position -> list[ 0 ] );
+  ref_p.y          = atof( position -> list[ 1 ] );
+  ref_p.z          = atof( position -> list[ 2 ] );
+
+  // origin
+  p0.x             = 0.0f;
+  p0.y             = 0.0f;
+  p0.z             = 0.0f;
+
+  p0_shifted.x     = p0.x;
+  p0_shifted.y     = p0.y;
+  p0_shifted.z     = p0.z + height;
+
+  // original normal
+  nz0.x            = 0.0f;
+  nz0.y            = 0.0f;
+  nz0.z            = 1.0f;
+
+  // final normal
+  n0.x             = atof( normal -> list[ 0 ] );
+  n0.y             = atof( normal -> list[ 1 ] );
+  n0.z             = atof( normal -> list[ 2 ] );
+
+  // transformations
+  n0               = vector3fNormalized( n0 );
+  axys_of_rotation = vector3fCrossProduct( nz0, n0 );
+  angle_b2v        = angleBetweenVectors( nz0, n0 );
+  angle_b2v_deg    = angle_b2v * 180.0f  / PI;
+
+  snprintf( temp_char, 300, "%f %f %f\n",
+	    atof( color -> list[0] ) / 255.0f,
+	    atof( color -> list[1] ) / 255.0f,
+	    atof( color -> list[2] ) / 255.0f );
+
+  file_content = strdup( "solid " );
+  file_content = J_cat( file_content, name -> list[ 0 ] );
+  file_content = J_cat( file_content, "\n" );
+  file_content = J_cat( file_content, "color " );
+  file_content = J_cat( file_content, temp_char );
+	
+  if ( sphere ){
+    ring_1 = malloc( sides * sizeof( struct vector3d_f * ) );
+    ring_2 = malloc( sides * sizeof( struct vector3d_f * ) );
+
+    for( j = 0; j <= sides / 2; j++ ){
+
+      angle = (float) j * 360.0f / (float) sides;
+
+      for ( i = 0; i < sides + 1 ; i++ ){
+	if ( i == sides + 1 ) i = 0;
+
+	unit_x = cos( ( float ) i / ( float ) sides * 2.0f * PI );
+	unit_y = sin( ( float ) i / ( float ) sides * 2.0f * PI );
+	sphere_p.x = radius * unit_x;
+	sphere_p.y = radius * unit_y;
+	sphere_p.z = 0;
+
+	if ( angle > 0 ){
+	  sphere_p         = rotatePointY( sphere_p, angle );
+	  sphere_p         = J_RecoverRF( ref_p, sphere_p );
+	  ring_2[ i ] = malloc( sizeof( struct vector3d_f ) );
+	  ring_2[ i ] -> x = sphere_p.x;
+	  ring_2[ i ] -> y = sphere_p.y;
+	  ring_2[ i ] -> z = sphere_p.z;
+	
 	}
 	else{
-		wcstombs( ascii_radius,
-			  shape_options.shape_radius,
-			  STD_BUFFER_SIZE );
-
-		radius = atof( ascii_radius );
+	  sphere_p = J_RecoverRF( ref_p, sphere_p );
+	  ring_1[ i ] = malloc( sizeof( struct vector3d_f ) );
+	  ring_1[ i ] -> x = sphere_p.x;
+	  ring_1[ i ] -> y = sphere_p.y;
+	  ring_1[ i ] -> z = sphere_p.z;
 	}
-
-	J_PrintShapeOptions( shape_options );
-	
-	position         = J_split( ascii_position, "," );
-
-	// need to test argument values separated by commas to 
-	color            = J_split( ascii_color, "," );
-	normal           = J_split( ascii_normal, "," );
-	name             = J_split( ascii_name, "." );
-
-	// target location
-	ref_p.x          = atof( position -> list[ 0 ] );
-	ref_p.y          = atof( position -> list[ 1 ] );
-	ref_p.z          = atof( position -> list[ 2 ] );
-
-	// origin
-	p0.x             = 0.0f;
-	p0.y             = 0.0f;
-	p0.z             = 0.0f;
-
-	p0_shifted.x     = p0.x;
-	p0_shifted.y     = p0.y;
-	p0_shifted.z     = p0.z + height;
-
-	// original normal
-	nz0.x            = 0.0f;
-	nz0.y            = 0.0f;
-	nz0.z            = 1.0f;
-
-	// final normal
-	n0.x             = atof( normal -> list[ 0 ] );
-	n0.y             = atof( normal -> list[ 1 ] );
-	n0.z             = atof( normal -> list[ 2 ] );
-
-	// transformations
-	n0               = vector3fNormalized( n0 );
-	axys_of_rotation = vector3fCrossProduct( nz0, n0 );
-	angle_b2v        = angleBetweenVectors( nz0, n0 );
-	angle_b2v_deg    = angle_b2v * 180.0f  / PI;
-
-	snprintf( temp_char, 300, "%f %f %f\n",
-		  atof( color -> list[0] ) / 255.0f,
-		  atof( color -> list[1] ) / 255.0f,
-		  atof( color -> list[2] ) / 255.0f );
-
-	file_content = strdup( "solid " );
-	file_content = J_cat( file_content, name -> list[ 0 ] );
-	file_content = J_cat( file_content, "\n" );
-	file_content = J_cat( file_content, "color " );
-	file_content = J_cat( file_content, temp_char );
-	
-	if ( sphere ){
-		ring_1 = malloc( sides * sizeof( struct vector3d_f * ) );
-		ring_2 = malloc( sides * sizeof( struct vector3d_f * ) );
-
-		for( j = 0; j <= sides / 2; j++ ){
-
-			angle = (float) j * 360.0f / (float) sides;
-
-			for ( i = 0; i < sides + 1 ; i++ ){
-				if ( i == sides + 1 ) i = 0;
-
-				unit_x = cos( ( float ) i / ( float ) sides * 2.0f * PI );
-				unit_y = sin( ( float ) i / ( float ) sides * 2.0f * PI );
-				sphere_p.x = radius * unit_x;
-				sphere_p.y = radius * unit_y;
-				sphere_p.z = 0;
-
-				if ( angle > 0 ){
-					sphere_p         = rotatePointY( sphere_p, angle );
-					sphere_p         = J_RecoverRF( ref_p, sphere_p );
-					ring_2[ i ] = malloc( sizeof( struct vector3d_f ) );
-					ring_2[ i ] -> x = sphere_p.x;
-					ring_2[ i ] -> y = sphere_p.y;
-					ring_2[ i ] -> z = sphere_p.z;
-	
-				}
-				else{
-					sphere_p = J_RecoverRF( ref_p, sphere_p );
-					ring_1[ i ] = malloc( sizeof( struct vector3d_f ) );
-					ring_1[ i ] -> x = sphere_p.x;
-					ring_1[ i ] -> y = sphere_p.y;
-					ring_1[ i ] -> z = sphere_p.z;
-				}
 				
-			}
+      }
 			
-			ring_switcher += 1;
+      ring_switcher += 1;
 
-			if ( ring_switcher >= 2 ){
-				for ( k = 0; k < sides; k++ ){
-					struct vector3d_f temp_a1;
-					struct vector3d_f temp_a2;
-					struct vector3d_f temp_b1;
-					struct vector3d_f temp_b2;
+      if ( ring_switcher >= 2 ){
+	for ( k = 0; k < sides; k++ ){
+	  struct vector3d_f temp_a1;
+	  struct vector3d_f temp_a2;
+	  struct vector3d_f temp_b1;
+	  struct vector3d_f temp_b2;
 					
-					temp_a1.x = ring_1[k] -> x;
-					temp_a1.y = ring_1[k] -> y;
-					temp_a1.z = ring_1[k] -> z;
+	  temp_a1.x = ring_1[k] -> x;
+	  temp_a1.y = ring_1[k] -> y;
+	  temp_a1.z = ring_1[k] -> z;
 
-					temp_b1.x = ring_2[k] -> x;
-					temp_b1.y = ring_2[k] -> y;
-					temp_b1.z = ring_2[k] -> z;
+	  temp_b1.x = ring_2[k] -> x;
+	  temp_b1.y = ring_2[k] -> y;
+	  temp_b1.z = ring_2[k] -> z;
 					
-					if ( ( k + 1 ) > ( sides - 1 ) ){
-						temp_a2.x = ring_1[0] -> x;
-						temp_a2.y = ring_1[0] -> y;
-						temp_a2.z = ring_1[0] -> z;
+	  if ( ( k + 1 ) > ( sides - 1 ) ){
+	    temp_a2.x = ring_1[0] -> x;
+	    temp_a2.y = ring_1[0] -> y;
+	    temp_a2.z = ring_1[0] -> z;
 
-						temp_b2.x = ring_2[0] -> x;
-						temp_b2.y = ring_2[0] -> y;
-						temp_b2.z = ring_2[0] -> z;
-					}
-					else{
-						temp_a2.x = ring_1[k + 1] -> x;
-						temp_a2.y = ring_1[k + 1] -> y;
-						temp_a2.z = ring_1[k + 1] -> z;
+	    temp_b2.x = ring_2[0] -> x;
+	    temp_b2.y = ring_2[0] -> y;
+	    temp_b2.z = ring_2[0] -> z;
+	  }
+	  else{
+	    temp_a2.x = ring_1[k + 1] -> x;
+	    temp_a2.y = ring_1[k + 1] -> y;
+	    temp_a2.z = ring_1[k + 1] -> z;
 						
-						temp_b2.x = ring_2[k + 1] -> x;
-						temp_b2.y = ring_2[k + 1] -> y;
-						temp_b2.z = ring_2[k + 1] -> z;
-					}
-					if ( k == ( sides / 4 ) ||
-					     k == ( 3 * sides / 4 ) ){
-						temp_normal_1 =
-							vector3fNormalized( vector3fNormalFrom3points( temp_a1,
-												       temp_a2,
-												       temp_b2 ) );
-						triangle = J_BuildTriangle( temp_normal_1,
-									    temp_a1,
-									    temp_a2,
-									    temp_b2 );
-						file_content  = STLFileTriangleBlock( triangle,
-										      file_content );
-					}
-					else if ( k == ( sides / 4 - 1 ) ||
-						  k == ( 3 * sides / 4  - 1 ) ){
-						temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( temp_a1, temp_a2, temp_b1 ) );
-						triangle      = J_BuildTriangle( temp_normal_1,
-										 temp_a1,
-										 temp_a2,
-										 temp_b1 );
-						file_content  = STLFileTriangleBlock( triangle,
-										      file_content );
-					}
-					else{
-						temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( temp_a1, temp_a2, temp_b2 ) );
-						triangle      = J_BuildTriangle( temp_normal_1,
-										 temp_a1,
-										 temp_a2,
-										 temp_b2 );
-						file_content  = STLFileTriangleBlock( triangle,
-										      file_content );
+	    temp_b2.x = ring_2[k + 1] -> x;
+	    temp_b2.y = ring_2[k + 1] -> y;
+	    temp_b2.z = ring_2[k + 1] -> z;
+	  }
+	  if ( k == ( sides / 4 ) ||
+	       k == ( 3 * sides / 4 ) ){
+	    temp_normal_1 =
+	      vector3fNormalized( vector3fNormalFrom3points( temp_a1,
+							     temp_a2,
+							     temp_b2 ) );
+	    triangle = J_BuildTriangle( temp_normal_1,
+					temp_a1,
+					temp_a2,
+					temp_b2 );
+	    file_content  = STLFileTriangleBlock( triangle,
+						  file_content );
+	  }
+	  else if ( k == ( sides / 4 - 1 ) ||
+		    k == ( 3 * sides / 4  - 1 ) ){
+	    temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( temp_a1, temp_a2, temp_b1 ) );
+	    triangle      = J_BuildTriangle( temp_normal_1,
+					     temp_a1,
+					     temp_a2,
+					     temp_b1 );
+	    file_content  = STLFileTriangleBlock( triangle,
+						  file_content );
+	  }
+	  else{
+	    temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( temp_a1, temp_a2, temp_b2 ) );
+	    triangle      = J_BuildTriangle( temp_normal_1,
+					     temp_a1,
+					     temp_a2,
+					     temp_b2 );
+	    file_content  = STLFileTriangleBlock( triangle,
+						  file_content );
 
-						temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( temp_b1, temp_b2, temp_a1 ) );
-						triangle      = J_BuildTriangle( temp_normal_1,
-										 temp_b1,
-										 temp_b2,
-										 temp_a1 );
-						file_content  = STLFileTriangleBlock( triangle,
-										      file_content );
-					}
+	    temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( temp_b1, temp_b2, temp_a1 ) );
+	    triangle      = J_BuildTriangle( temp_normal_1,
+					     temp_b1,
+					     temp_b2,
+					     temp_a1 );
+	    file_content  = STLFileTriangleBlock( triangle,
+						  file_content );
+	  }
 					
-				}
-				for ( k = 0; k < sides; k++ ){
-					ring_1[ k ] -> x = ring_2[ k ] -> x;
-					ring_1[ k ] -> y = ring_2[ k ] -> y;
-					ring_1[ k ] -> z = ring_2[ k ] -> z;
-				}
-			}
-		}
-		// clean sphere here.
 	}
-	else{
-		for( i = 0; i <= sides; i ++ ){
-			if ( i == sides ){
-				angle = 0.0f;
-			}
-			else{
-				angle = 2.0f * PI * i / sides;
-			}
+	for ( k = 0; k < sides; k++ ){
+	  ring_1[ k ] -> x = ring_2[ k ] -> x;
+	  ring_1[ k ] -> y = ring_2[ k ] -> y;
+	  ring_1[ k ] -> z = ring_2[ k ] -> z;
+	}
+      }
+    }
+    // clean sphere here.
+  }
+  else{
+    for( i = 0; i <= sides; i ++ ){
+      if ( i == sides ){
+	angle = 0.0f;
+      }
+      else{
+	angle = 2.0f * PI * i / sides;
+      }
 		
-			if ( i == 0 ){
-				p1.x = radius * cos( angle );
-				p1.y = radius * sin( angle );
-				p1.z = 0;
+      if ( i == 0 ){
+	p1.x = radius * cos( angle );
+	p1.y = radius * sin( angle );
+	p1.z = 0;
 		
-				if ( height > 0 && !pyramid ){
-					p1_shifted.x = p1.x;
-					p1_shifted.y = p1.y;
-					p1_shifted.z = p1.z + height;
-				}
-
-				p1 = rotatePoint( p1,
-						  45,
-						  nz0 );
-				
-				p1 = rotatePoint( p1,
-						  angle_b2v_deg,
-						  axys_of_rotation );
-				
-				p1 = J_RecoverRF( ref_p,
-						  p1 );
-
-				if ( height > 0 ){
-					if ( !pyramid ){
-						p1_shifted = rotatePoint( p1_shifted,
-									  45,
-									  nz0 );
-						p1_shifted = rotatePoint( p1_shifted,
-									  angle_b2v_deg,
-									  axys_of_rotation );
-						p1_shifted = J_RecoverRF( ref_p,
-									  p1_shifted );
-					}
-
-					p0_shifted = rotatePoint( p0_shifted,
-								  45,
-								  nz0 );
-					p0_shifted = rotatePoint( p0_shifted,
-								  angle_b2v_deg,
-								  axys_of_rotation );
-					p0_shifted = J_RecoverRF( ref_p,
-								  p0_shifted );
-				}
-			}
-			else if ( i >= 1 ){
-				p2.x = radius * cos( angle );
-				p2.y = radius * sin( angle );
-				p2.z = 0;
-
-				if ( height > 0 && !pyramid ){
-					p2_shifted.x = p2.x;
-					p2_shifted.y = p2.y;
-					p2_shifted.z = p2.z + height;
-				}
-
-				p2 = rotatePoint( p2,
-						  45,
-						  nz0 );
-				p2 = rotatePoint( p2,
-						  angle_b2v_deg,
-						  axys_of_rotation );
-				p2 = J_RecoverRF( ref_p, p2 );
-
-				if ( height > 0 && !pyramid ){
-					p2_shifted = rotatePoint( p2_shifted,
-								  45,
-								  nz0 );
-					p2_shifted = rotatePoint( p2_shifted,
-								  angle_b2v_deg,
-								  axys_of_rotation );
-					p2_shifted = J_RecoverRF( ref_p,
-								  p2_shifted );
-				}
-
-				triangle = J_BuildTriangle( n0,
-							    ref_p,
-							    p1,
-							    p2 );
-				
-				file_content = STLFileTriangleBlock( triangle,
-								     file_content );
-				
-				if ( height > 0 ){
-					if ( pyramid ){
-						// add <normal> check here
-						temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( p1, p2, p0_shifted ) );
-						triangle = J_BuildTriangle( temp_normal_1, p1, p2, p0_shifted );
-						file_content = STLFileTriangleBlock( triangle, file_content );
-					}
-					else{
-						// add <normal> check here
-						temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( p2, p2_shifted, p1_shifted ) );
-						triangle = J_BuildTriangle( n0,
-									    p0_shifted,
-									    p1_shifted,
-									    p2_shifted );
-						triangle_body_1 = J_BuildTriangle( temp_normal_1,
-										   p1,
-										   p2,
-										   p1_shifted );
-						triangle_body_2 = J_BuildTriangle( temp_normal_1, p2,         p2_shifted, p1_shifted );
-
-						file_content = STLFileTriangleBlock( triangle,
-										     file_content );
-						file_content = STLFileTriangleBlock( triangle_body_1,
-										     file_content );
-						file_content = STLFileTriangleBlock( triangle_body_2, file_content );
-
-						p1_shifted.x = p2_shifted.x;
-						p1_shifted.y = p2_shifted.y;
-						p1_shifted.z = p2_shifted.z;
-					}
-				}
-				p1.x = p2.x;
-				p1.y = p2.y;
-				p1.z = p2.z;
-			}
-		}
+	if ( height > 0 && !pyramid ){
+	  p1_shifted.x = p1.x;
+	  p1_shifted.y = p1.y;
+	  p1_shifted.z = p1.z + height;
 	}
 
-	file_content = J_cat( file_content, "endsolid " );
-	file_content = J_cat( file_content, name -> list[ 0 ] );
-	file_content = J_cat( file_content, "\n" );
+	p1 = rotatePoint( p1,
+			  45,
+			  nz0 );
+				
+	p1 = rotatePoint( p1,
+			  angle_b2v_deg,
+			  axys_of_rotation );
+				
+	p1 = J_RecoverRF( ref_p,
+			  p1 );
+
+	if ( height > 0 ){
+	  if ( !pyramid ){
+	    p1_shifted = rotatePoint( p1_shifted,
+				      45,
+				      nz0 );
+	    p1_shifted = rotatePoint( p1_shifted,
+				      angle_b2v_deg,
+				      axys_of_rotation );
+	    p1_shifted = J_RecoverRF( ref_p,
+				      p1_shifted );
+	  }
+
+	  p0_shifted = rotatePoint( p0_shifted,
+				    45,
+				    nz0 );
+	  p0_shifted = rotatePoint( p0_shifted,
+				    angle_b2v_deg,
+				    axys_of_rotation );
+	  p0_shifted = J_RecoverRF( ref_p,
+				    p0_shifted );
+	}
+      }
+      else if ( i >= 1 ){
+	p2.x = radius * cos( angle );
+	p2.y = radius * sin( angle );
+	p2.z = 0;
+
+	if ( height > 0 && !pyramid ){
+	  p2_shifted.x = p2.x;
+	  p2_shifted.y = p2.y;
+	  p2_shifted.z = p2.z + height;
+	}
+
+	p2 = rotatePoint( p2,
+			  45,
+			  nz0 );
+	p2 = rotatePoint( p2,
+			  angle_b2v_deg,
+			  axys_of_rotation );
+	p2 = J_RecoverRF( ref_p, p2 );
+
+	if ( height > 0 && !pyramid ){
+	  p2_shifted = rotatePoint( p2_shifted,
+				    45,
+				    nz0 );
+	  p2_shifted = rotatePoint( p2_shifted,
+				    angle_b2v_deg,
+				    axys_of_rotation );
+	  p2_shifted = J_RecoverRF( ref_p,
+				    p2_shifted );
+	}
+
+	triangle = J_BuildTriangle( n0,
+				    ref_p,
+				    p1,
+				    p2 );
+				
+	file_content = STLFileTriangleBlock( triangle,
+					     file_content );
+				
+	if ( height > 0 ){
+	  if ( pyramid ){
+	    // add <normal> check here
+	    temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( p1, p2, p0_shifted ) );
+	    triangle = J_BuildTriangle( temp_normal_1, p1, p2, p0_shifted );
+	    file_content = STLFileTriangleBlock( triangle, file_content );
+	  }
+	  else{
+	    // add <normal> check here
+	    temp_normal_1 = vector3fNormalized( vector3fNormalFrom3points( p2, p2_shifted, p1_shifted ) );
+	    triangle = J_BuildTriangle( n0,
+					p0_shifted,
+					p1_shifted,
+					p2_shifted );
+	    triangle_body_1 = J_BuildTriangle( temp_normal_1,
+					       p1,
+					       p2,
+					       p1_shifted );
+	    triangle_body_2 = J_BuildTriangle( temp_normal_1, p2,         p2_shifted, p1_shifted );
+
+	    file_content = STLFileTriangleBlock( triangle,
+						 file_content );
+	    file_content = STLFileTriangleBlock( triangle_body_1,
+						 file_content );
+	    file_content = STLFileTriangleBlock( triangle_body_2, file_content );
+
+	    p1_shifted.x = p2_shifted.x;
+	    p1_shifted.y = p2_shifted.y;
+	    p1_shifted.z = p2_shifted.z;
+	  }
+	}
+	p1.x = p2.x;
+	p1.y = p2.y;
+	p1.z = p2.z;
+      }
+    }
+  }
+
+  file_content = J_cat( file_content, "endsolid " );
+  file_content = J_cat( file_content, name -> list[ 0 ] );
+  file_content = J_cat( file_content, "\n" );
 	
-	J_3dObjectSaveText( file_content, ascii_name );
+  J_3dObjectSaveText( file_content, ascii_name );
 	
-	J_cleanlist( position );
-	J_cleanlist( color );
-	J_cleanlist( normal );
-	J_cleanlist( name );
-	free( ascii_sides );	
-	free( ascii_name );
-	free( ascii_color );
-	free( ascii_normal );
-	free( ascii_position );
-	free( ascii_radius );
-	free( ascii_rlevel );
+  J_cleanlist( position );
+  J_cleanlist( color );
+  J_cleanlist( normal );
+  J_cleanlist( name );
+  free( ascii_sides );	
+  free( ascii_name );
+  free( ascii_color );
+  free( ascii_normal );
+  free( ascii_position );
+  free( ascii_radius );
+  free( ascii_rlevel );
 }
 
 
 void J_3dObjectTransform( TCHAR *file_to_open,
 			  struct ShapeOptions shape_options )
 {
-	char *ascii_file_name = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_file_to_save = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_scaling_factor = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_translation_vector = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_mirror_plane = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_normal = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_pick_point = malloc( STD_BUFFER_SIZE * sizeof( char ) );
-	char *ascii_rotate_axis = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_file_name = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_file_to_save = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_scaling_factor = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_translation_vector = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_mirror_plane = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_normal = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_pick_point = malloc( STD_BUFFER_SIZE * sizeof( char ) );
+  char *ascii_rotate_axis = malloc( STD_BUFFER_SIZE * sizeof( char ) );
 
-	char *transformed_file = NULL;
-	char line[ STD_BUFFER_SIZE ];
-	char temporary_string[ STD_BUFFER_SIZE ];
+  char *transformed_file = NULL;
+  char line[ STD_BUFFER_SIZE ];
+  char temporary_string[ STD_BUFFER_SIZE ];
 
-	struct J_list *line_split = NULL;
-	struct J_list *translation_vector = NULL;
-	struct J_list *normal = NULL;
-	struct J_list *this_point = NULL;
+  struct J_list *line_split = NULL;
+  struct J_list *translation_vector = NULL;
+  struct J_list *normal = NULL;
+  struct J_list *this_point = NULL;
 	
-	float scaling_factor = 1.0f;
-	float x_translation = 0.0f;
-	float y_translation = 0.0f;
-	float z_translation = 0.0f;
-	float x_mirror = 1.0f;
-	float y_mirror = 1.0f;
-	float z_mirror = 1.0f;
-	float nx = 1.0f;
-	float ny = 0.0f;
-	float nz = 0.0f;
-	float x = 0.0f;
-	float y = 0.0f;
-	float z = 0.0f;
-	float angle_degrees = 0.0f;
+  float scaling_factor = 1.0f;
+  float x_translation = 0.0f;
+  float y_translation = 0.0f;
+  float z_translation = 0.0f;
+  float x_mirror = 1.0f;
+  float y_mirror = 1.0f;
+  float z_mirror = 1.0f;
+  float nx = 1.0f;
+  float ny = 0.0f;
+  float nz = 0.0f;
+  float x = 0.0f;
+  float y = 0.0f;
+  float z = 0.0f;
+  float angle_degrees = 0.0f;
 		
-	if ( ( shape_options.geom_scaling_factor &&
-	       shape_options.geom_translation_vector ) ||
-	     ( shape_options.geom_scaling_factor &&
-	       shape_options.geom_mirror_plane ) ||
-	     ( shape_options.geom_scaling_factor &&
-	       shape_options.geom_rotate ) ||
-	     ( shape_options.geom_translation_vector &&
-	       shape_options.geom_mirror_plane ) ||
-	     ( shape_options.geom_translation_vector &&
-	       shape_options.geom_rotate ) ){
-		J_3dObjectErrorExit( );
-	}
+  if ( ( shape_options.geom_scaling_factor &&
+	 shape_options.geom_translation_vector ) ||
+       ( shape_options.geom_scaling_factor &&
+	 shape_options.geom_mirror_plane ) ||
+       ( shape_options.geom_scaling_factor &&
+	 shape_options.geom_rotate ) ||
+       ( shape_options.geom_translation_vector &&
+	 shape_options.geom_mirror_plane ) ||
+       ( shape_options.geom_translation_vector &&
+	 shape_options.geom_rotate ) ){
+    J_3dObjectErrorExit( );
+  }
 	
-	if ( file_to_open ){
-		wcstombs( ascii_file_name,
-			  file_to_open, STD_BUFFER_SIZE );
-		printf( "File to transform : %s. ", ascii_file_name );
-	}
+  if ( file_to_open ){
+    wcstombs( ascii_file_name,
+	      file_to_open, STD_BUFFER_SIZE );
+    printf( "File to transform : %s. ", ascii_file_name );
+  }
 
-	printf( "Transforming operations: " );
+  printf( "Transforming operations: " );
 	
-	if ( shape_options.geom_mirror_plane ){
-		wcstombs( ascii_mirror_plane,
-			  shape_options.geom_mirror_plane,
-			  STD_BUFFER_SIZE );
-		printf( "mirror\n" );
-		printf( "Mirror using plane: %s\n",
-			ascii_mirror_plane );
-		if ( strstr( ascii_mirror_plane, "x" ) ||
-		     strstr( ascii_mirror_plane, "X" ) ){
-			x_mirror = -1.0f;
-		}
-		else if ( strstr( ascii_mirror_plane, "y" ) ||
-			  strstr( ascii_mirror_plane, "Y" ) ){
-			y_mirror = -1.0f;
-		}
-		else if ( strstr( ascii_mirror_plane, "z" ) ||
-			  strstr( ascii_mirror_plane, "Z" ) ){
-			z_mirror = -1.0f;
-		}
-		else{
-			printf( "Mirror plane not recognized\n" );
-			exit( 1 );
-		}
-	}
-	if ( shape_options.geom_scaling_factor ){
-		wcstombs( ascii_scaling_factor,
-			  shape_options.geom_scaling_factor,
-			  STD_BUFFER_SIZE );
-		printf( "scaling\n" );
-		printf( "Scaling factor: %s\n",
-			ascii_scaling_factor );
-		scaling_factor = atof( ascii_scaling_factor );
-	}
-	if ( shape_options.geom_translation_vector ){
-		wcstombs( ascii_translation_vector,
-			  shape_options.geom_translation_vector,
-			  STD_BUFFER_SIZE );
-		printf( "translation\n" );
-		translation_vector = J_split( ascii_translation_vector,
-					      "," );
-		x_translation = atof( translation_vector -> list[0] );
-		y_translation = atof( translation_vector -> list[1] );
-		z_translation = atof( translation_vector -> list[2] );
-		printf( "Translation vector: %f,%f,%f\n",
-			x_translation,
-			y_translation,
-			z_translation );
-	}
-	if ( shape_options.geom_rotate ){
+  if ( shape_options.geom_mirror_plane ){
+    wcstombs( ascii_mirror_plane,
+	      shape_options.geom_mirror_plane,
+	      STD_BUFFER_SIZE );
+    printf( "mirror\n" );
+    printf( "Mirror using plane: %s\n",
+	    ascii_mirror_plane );
+    if ( strstr( ascii_mirror_plane, "x" ) ||
+	 strstr( ascii_mirror_plane, "X" ) ){
+      x_mirror = -1.0f;
+    }
+    else if ( strstr( ascii_mirror_plane, "y" ) ||
+	      strstr( ascii_mirror_plane, "Y" ) ){
+      y_mirror = -1.0f;
+    }
+    else if ( strstr( ascii_mirror_plane, "z" ) ||
+	      strstr( ascii_mirror_plane, "Z" ) ){
+      z_mirror = -1.0f;
+    }
+    else{
+      printf( "Mirror plane not recognized\n" );
+      exit( 1 );
+    }
+  }
+  if ( shape_options.geom_scaling_factor ){
+    wcstombs( ascii_scaling_factor,
+	      shape_options.geom_scaling_factor,
+	      STD_BUFFER_SIZE );
+    printf( "scaling\n" );
+    printf( "Scaling factor: %s\n",
+	    ascii_scaling_factor );
+    scaling_factor = atof( ascii_scaling_factor );
+  }
+  if ( shape_options.geom_translation_vector ){
+    wcstombs( ascii_translation_vector,
+	      shape_options.geom_translation_vector,
+	      STD_BUFFER_SIZE );
+    printf( "translation\n" );
+    translation_vector = J_split( ascii_translation_vector,
+				  "," );
+    x_translation = atof( translation_vector -> list[0] );
+    y_translation = atof( translation_vector -> list[1] );
+    z_translation = atof( translation_vector -> list[2] );
+    printf( "Translation vector: %f,%f,%f\n",
+	    x_translation,
+	    y_translation,
+	    z_translation );
+  }
+  if ( shape_options.geom_rotate ){
 		
-		if ( !shape_options.geom_rotate ){
-			shape_options.geom_rotate = _T( "0" );
-		}
+    if ( !shape_options.geom_rotate ){
+      shape_options.geom_rotate = _T( "0" );
+    }
 		
-		if ( !shape_options.shape_normal ){
-			shape_options.shape_normal = _T( "0,0,1" );
-		}
+    if ( !shape_options.shape_normal ){
+      shape_options.shape_normal = _T( "0,0,1" );
+    }
 
-		if ( !shape_options.geom_pick_point ){
-			shape_options.geom_pick_point = _T( "0,0,0" );
-		}
+    if ( !shape_options.geom_pick_point ){
+      shape_options.geom_pick_point = _T( "0,0,0" );
+    }
 
-		if ( !shape_options.shape_out_file ){
-			shape_options.shape_out_file = _T( "cube_transformed.stl" );
-		}
+    if ( !shape_options.shape_out_file ){
+      shape_options.shape_out_file = _T( "cube_transformed.stl" );
+    }
 		
-		wcstombs( ascii_rotate_axis,
-			  shape_options.geom_rotate,
-			  STD_BUFFER_SIZE );
+    wcstombs( ascii_rotate_axis,
+	      shape_options.geom_rotate,
+	      STD_BUFFER_SIZE );
 
-		wcstombs( ascii_normal,
-			  shape_options.shape_normal,
-			  STD_BUFFER_SIZE );
+    wcstombs( ascii_normal,
+	      shape_options.shape_normal,
+	      STD_BUFFER_SIZE );
 		
-		wcstombs( ascii_pick_point,
-			  shape_options.geom_pick_point,
-			  STD_BUFFER_SIZE );
+    wcstombs( ascii_pick_point,
+	      shape_options.geom_pick_point,
+	      STD_BUFFER_SIZE );
 		
-		printf( "rotation\n" );
+    printf( "rotation\n" );
 		
-		normal        = J_split( ascii_normal, "," );
-		nx            = atof( normal -> list[0] );
-		ny            = atof( normal -> list[1] );
-		nz            = atof( normal -> list[2] );
+    normal        = J_split( ascii_normal, "," );
+    nx            = atof( normal -> list[0] );
+    ny            = atof( normal -> list[1] );
+    nz            = atof( normal -> list[2] );
 		
-		this_point    = J_split( ascii_pick_point, "," );
-		x             = atof( this_point -> list[0] );
-		y             = atof( this_point -> list[1] );
-		z             = atof( this_point -> list[2] );
+    this_point    = J_split( ascii_pick_point, "," );
+    x             = atof( this_point -> list[0] );
+    y             = atof( this_point -> list[1] );
+    z             = atof( this_point -> list[2] );
 		
-		angle_degrees = atof( ascii_rotate_axis );
+    angle_degrees = atof( ascii_rotate_axis );
 
-		printf( "%.3f degrees around vector: [ %.2f,%.2f,%.2f ] at point: [ %.3f,%.3f,%.3f ]\n", 
-			angle_degrees, 
-			nx, ny, nz, 
-			x, y, z );
-	}
+    printf( "%.3f degrees around vector: [ %.2f,%.2f,%.2f ] at point: [ %.3f,%.3f,%.3f ]\n", 
+	    angle_degrees, 
+	    nx, ny, nz, 
+	    x, y, z );
+  }
 
-	if ( shape_options.shape_out_file ){
-		wcstombs( ascii_file_to_save,
-			  shape_options.shape_out_file,
-			  STD_BUFFER_SIZE );
-	}
+  if ( shape_options.shape_out_file ){
+    wcstombs( ascii_file_to_save,
+	      shape_options.shape_out_file,
+	      STD_BUFFER_SIZE );
+  }
 
-	printf( "Transforming file. Please wait ...\n" );
+  printf( "Transforming file. Please wait ...\n" );
 
-	FILE *f = J_3dObjectCheckFile_ascii( ascii_file_name );
+  FILE *f = J_3dObjectCheckFile_ascii( ascii_file_name );
 
+  snprintf( temporary_string,
+	    STD_BUFFER_SIZE,
+	    "solid %s\n",
+	    ascii_file_name );
+		
+  transformed_file = strdup( temporary_string );
+	
+  while( fgets( line, STD_BUFFER_SIZE, f ) != NULL ){
+    if ( strstr( line, "solid" ) )
+      continue;
+    else if ( strstr( line, "vertex" ) ){
+      char *buffer_trim = malloc( strlen( line ) + 1 );
+      strcpy( buffer_trim, line );
+      buffer_trim = J_trim( buffer_trim );
+      char *buffer_strip = malloc( strlen( line ) + 1 );	
+      strcpy( buffer_strip, buffer_trim );	
+      buffer_strip = J_strip( buffer_strip );
+      line_split = J_split( buffer_strip, " " );
+      if ( shape_options.geom_rotate ){
+				
+	struct vector3d_f vertex;
+	struct vector3d_f origin_at;
+	struct vector3d_f normal;
+	struct vector3d_f moved;
+	struct vector3d_f rotated;
+	struct vector3d_f recovered;
+				
+	vertex.x = atof( line_split -> list[ 1 ] );
+	vertex.y = atof( line_split -> list[ 2 ] );
+	vertex.z = atof( line_split -> list[ 3 ] );
+				
+	origin_at.x = x;
+	origin_at.y = y;
+	origin_at.z = z;
+				
+	normal.x = nx;
+	normal.y = ny;
+	normal.z = nz;
+				
+	moved = J_MoveRFToOrigin( origin_at, vertex );
+	rotated = rotatePoint( moved, angle_degrees, normal );
+	recovered = J_RecoverRF( origin_at, rotated );
+				
 	snprintf( temporary_string,
 		  STD_BUFFER_SIZE,
-		  "solid %s\n",
-		  ascii_file_name );
-		
-	transformed_file = strdup( temporary_string );
-	
-	while( fgets( line, STD_BUFFER_SIZE, f ) != NULL ){
-		if ( strstr( line, "solid" ) )
-			continue;
-		else if ( strstr( line, "vertex" ) ){
-			char *buffer_trim = malloc( strlen( line ) + 1 );
-			strcpy( buffer_trim, line );
-			buffer_trim = J_trim( buffer_trim );
-			char *buffer_strip = malloc( strlen( line ) + 1 );	
-			strcpy( buffer_strip, buffer_trim );	
-			buffer_strip = J_strip( buffer_strip );
-			line_split = J_split( buffer_strip, " " );
-			if ( shape_options.geom_rotate ){
-				
-				struct vector3d_f vertex;
-				struct vector3d_f origin_at;
-				struct vector3d_f normal;
-				struct vector3d_f moved;
-				struct vector3d_f rotated;
-				struct vector3d_f recovered;
-				
-				vertex.x = atof( line_split -> list[ 1 ] );
-				vertex.y = atof( line_split -> list[ 2 ] );
-				vertex.z = atof( line_split -> list[ 3 ] );
-				
-				origin_at.x = x;
-				origin_at.y = y;
-				origin_at.z = z;
-				
-				normal.x = nx;
-				normal.y = ny;
-				normal.z = nz;
-				
-				moved = J_MoveRFToOrigin( origin_at, vertex );
-				rotated = rotatePoint( moved, angle_degrees, normal );
-				recovered = J_RecoverRF( origin_at, rotated );
-				
-				snprintf( temporary_string,
-					  STD_BUFFER_SIZE,
-					  "\tvertex %f %f %f\n", 
-					  recovered.x, 
-					  recovered.y, 
-					  recovered.z );
-			}
-			else{
-				snprintf( temporary_string,
-					  STD_BUFFER_SIZE,
-					  "\tvertex %f %f %f\n", 
-					  ( atof( line_split -> list[ 1 ] ) + x_translation ) * scaling_factor * x_mirror, 
-					  ( atof( line_split -> list[ 2 ] ) + y_translation ) * scaling_factor * y_mirror, 
-					  ( atof( line_split -> list[ 3 ] ) + z_translation ) * scaling_factor * z_mirror );
-			}
-			transformed_file = J_cat( transformed_file, temporary_string );
-			J_cleanlist( line_split );
-			free( buffer_trim );
-			free( buffer_strip );
-		}
-		else{
-			transformed_file = J_cat( transformed_file, line );
-		}
-	}
-	printf( "Saving data as: %s\n", ascii_file_to_save );
-	J_3dObjectSaveText( transformed_file, ascii_file_to_save );
+		  "\tvertex %f %f %f\n", 
+		  recovered.x, 
+		  recovered.y, 
+		  recovered.z );
+      }
+      else{
+	snprintf( temporary_string,
+		  STD_BUFFER_SIZE,
+		  "\tvertex %f %f %f\n", 
+		  ( atof( line_split -> list[ 1 ] ) + x_translation ) * scaling_factor * x_mirror, 
+		  ( atof( line_split -> list[ 2 ] ) + y_translation ) * scaling_factor * y_mirror, 
+		  ( atof( line_split -> list[ 3 ] ) + z_translation ) * scaling_factor * z_mirror );
+      }
+      transformed_file = J_cat( transformed_file, temporary_string );
+      J_cleanlist( line_split );
+      free( buffer_trim );
+      free( buffer_strip );
+    }
+    else{
+      transformed_file = J_cat( transformed_file, line );
+    }
+  }
+  printf( "Saving data as: %s\n", ascii_file_to_save );
+  J_3dObjectSaveText( transformed_file, ascii_file_to_save );
 
-	free( ascii_file_name );
-	free( ascii_file_to_save );
-	free( ascii_scaling_factor );
-	free( ascii_translation_vector );
-	free( ascii_mirror_plane );
-	free( ascii_rotate_axis );
-	free( ascii_normal );
+  free( ascii_file_name );
+  free( ascii_file_to_save );
+  free( ascii_scaling_factor );
+  free( ascii_translation_vector );
+  free( ascii_mirror_plane );
+  free( ascii_rotate_axis );
+  free( ascii_normal );
 
-	exit( 0 );
+  exit( 0 );
 }
 
 

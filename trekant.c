@@ -11,7 +11,9 @@
 
 #define  UNICODE
 #define _UNICODE
- 
+
+#include "DBG.h"
+
 #include <windows.h>
 #include <commctrl.h>
 #include <commdlg.h>
@@ -29,16 +31,12 @@
 #include <wchar.h>
 #include <tchar.h>
 
+#include "J_fonts.h"
 #include "J_fileOperations.h"
 #include "J_number.h"
 #include "J_string.h"
 #include "J_modelManagement.h"
 #include "J_3dObjects.h"
-
-#ifndef _J_fonts_h
-#define _J_fonts_h
-#include "J_fonts.h"
-#endif
 
 #include "modelbucket.h"
 #include "resources.h"
@@ -71,10 +69,8 @@ void displayMainScene( struct SceneParameters );
 void flipOrientation( void );
 void Measure( WPARAM, LPARAM );
 
-
 struct J_vertex *nastran_vertex_array( struct J_vertex *, struct J_vertex, unsigned long );
 char *convertToENotation( char * );
-
 
 void load_stl_ascii_1( struct J_model *, FILE * );
 void load_stl_binary_1( struct J_model *, FILE * );
@@ -85,7 +81,7 @@ void FetchFileName( TCHAR *, TCHAR * );
 INT CBTGetOpenFileName( OPENFILENAME );
 INT CBTChooseColor( CHOOSECOLOR * );
 INT CBTMessageBox(HWND, TCHAR*, TCHAR*, UINT);
-INT CBTDialogpBox( HINSTANCE, TCHAR *, HWND, DLGPROC );
+INT CBTDialogBox( HINSTANCE, TCHAR *, HWND, DLGPROC );
 
 
 LRESULT	CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
@@ -103,9 +99,7 @@ int InitGL( GLvoid );
 int DrawGLScene( struct SceneParameters );
 void ReinitializeModel( struct RunParameters * );
 
-
 static HMENU     CreateOpenGLPopupMenu( );
-
 
 HDC hDC = NULL;		
 HGLRC hRC = NULL;		
@@ -116,9 +110,6 @@ HHOOK hhk;
 int keys[ 256 ];	
 int active = 1;		
 
-
-
-
 struct RunParameters  runParams;
 struct SceneParameters sceneParams;
 struct ShapeOptions    shapeOptions;
@@ -128,19 +119,18 @@ static struct J_model *model;
 int WINAPI WinMain( HINSTANCE hInstance,
 		    HINSTANCE hPrevInstance,
 		    LPSTR lpCmdLine,
-		    int nCmdShow )
-{
+		    int nCmdShow ) {
+  T_debug( "WinMain start" );
   const TCHAR *file_to_open = NULL;
   TCHAR window_title[1000];
   TCHAR *current_argument = NULL;
   unsigned char create_window_flag  = 0;
-
+  
   MSG  msg;
   int  argc = 0;
   int  i = 0;
   int  ii = 0;
-  TCHAR **argv = CommandLineToArgvW( GetCommandLine( ),
-				     &argc );
+  TCHAR **argv = CommandLineToArgvW( GetCommandLine( ), &argc );
   TCHAR app_name[100]; 
   enum Options option;
 
@@ -190,7 +180,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
     enum J_filetype ft = SinglePartModel( runParams.file_to_open );
     //
     FILE *f = _tfopen( runParams.file_to_open, _T("rb") );
-		
+    
     if ( ft == STL_A ){
       load_stl_ascii_1( model, f );
     }
@@ -225,7 +215,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
   else{  // between 3 and 13 parameters
     i = 0;
     ii = argc;
-
+    
     while( --ii > 0 ){
       i += 1;
       if ( ( *++argv )[ 0 ] == '-' ){ //was using ( argv[ i ] )
@@ -414,7 +404,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
       }
     }
   }
-
+  
   if ( runParams.shape_only ){
     if ( !_tcscmp( shapeOptions.shape_name,
 		   _T( "prism" ) ) ){
@@ -1060,11 +1050,11 @@ WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ){
 	      _tfopen( FileNames[ gcount ], _T("rb") );
 
 	    if ( ft == STL_A ){
-	      usleep( 1 );
+	      // usleep( 1 ); // will remove them later
 	      load_stl_ascii_1( model, f );
 	    }
 	    else if( ft == STL_B ){
-	      usleep( 1 );
+	      // usleep( 1 ); // will remove them later
 	      load_stl_binary_1( model, f );
 	    }
 	    else{
@@ -3124,7 +3114,7 @@ void ReinitializeModel( struct RunParameters * runParams ) {
   enable_origin = 0;
   toggle_ortho_perspective = 1;
   toggle_random_color = 0;
-  total_allocated_triangle = 1;
+  // total_allocated_triangle = 1; // will remove later
   nastran_tot_alloc_vertices = 1;
   polygon_representation_surface = 1;
   polygon_representation_surface_and_wire = 0;
