@@ -7,6 +7,9 @@ issues.
 Nov 21, 2015: I am about to finish to upload the code. I have
 been doing cleaning and text format changes. It may take a few more days to fully complete that.
 
+Mar 28, 2021: The project was no longer compiling when using gcc 8.3. I move some code around to
+   fix this. I also added a debug function that will show the line and file where this is called. 
+
 
 TrekantER C
 ===========
@@ -27,7 +30,7 @@ TrekantER C
 - requires no installation, the exe file can copied to any location and run with a
   simple double-click or from the command line by invoking the application name.
 - compiled version will be made available for download in bitbucket/github.
-- Very Small size ~350 kb. Can I make it smaller?
+- Very Small size ~350 kb. The size is now 500 kb (gcc 8.3)
 - It can load any STL file (ASCII or Binary) and of any size.
   The only limitation is the system memory.
 
@@ -66,12 +69,12 @@ Trekanter C what is in the future.
 
 My development environment is:
 
-- Debian 8
-- x86_64-w64-mingw32-gcc 4.9.1 to produce 64 bit windows executables
-- i686-w64-mingw32-gcc 4.9.1 to produce 32 bit windows executables
-- icoutils 0.31.0
-- GNU Emacs 24.4.1
-- GNU make 3.81
+- Debian 10
+- x86_64-w64-mingw32-gcc 8.3 to produce 64 bit windows executables. Previously 4.9
+- i686-w64-mingw32-gcc 8.3 to produce 32 bit windows executables.
+- icoutils 0.32.3  previously 0.31.0
+- GNU Emacs 26.1.2  Previously 24.4.1
+- GNU make 4.2.1 Previously 3.81
 
 
 License
