@@ -11,6 +11,7 @@
 */
 
 #include<math.h>
+#include<stdbool.h>
 
 #ifndef J_FILEOPERATIONS_H
 #define J_FILEOPERATIONS_H
@@ -25,20 +26,17 @@ enum J_filetype{ STL_A = 0,
 		 NONE
 };
 
-float HexFloatingPointToDecimal( char *hex_floating_point_value );
+float HexFloatingPointToDecimal( char * );
 
-char *GetHexString( unsigned char *binary_buffer,
-		    int lower_byte,
-		    int upper_byte,
-		    char *binary_string  );
+void GetHexString( unsigned char*, int, int, char* );
 
-unsigned int CheckIfSTLB( FILE *f );
+bool CheckIfSTLB( FILE *f );
 
-enum J_filetype J_determineFileType( FILE *f );
+enum J_filetype J_determineFileType( FILE * );
 
 char *J_getFullPathToSingleFile( char *, char * );
 
-void J_getFileSize( FILE *f );
+void J_getFileSize( FILE * );
 
 #endif
 
